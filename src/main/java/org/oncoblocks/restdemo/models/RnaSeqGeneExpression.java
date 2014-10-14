@@ -5,10 +5,19 @@ package org.oncoblocks.restdemo.models;
  */
 public class RnaSeqGeneExpression {
 	
+	private Integer rnaSeqGeneExpressionId;
 	private Integer cellLineId;
 	private Integer entrezGeneId;
 	private String accession;
 	private Double value;
+
+	public Integer getRnaSeqGeneExpressionId() {
+		return rnaSeqGeneExpressionId;
+	}
+
+	public void setRnaSeqGeneExpressionId(Integer rnaSeqGeneExpressionId) {
+		this.rnaSeqGeneExpressionId = rnaSeqGeneExpressionId;
+	}
 
 	public Integer getCellLineId() {
 		return cellLineId;

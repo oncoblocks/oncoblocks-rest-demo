@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `cell_lines` (
 DROP TABLE IF EXISTS `rnaseq_gene_expression` ;
 
 CREATE TABLE IF NOT EXISTS `rnaseq_gene_expression` (
+  `rnaseq_gene_expression_id` INT NOT NULL AUTO_INCREMENT,
   `cell_line_id` INT NOT NULL,
   `entrez_gene_id` INT NOT NULL,
   `accession` VARCHAR(20) NOT NULL,

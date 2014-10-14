@@ -28,7 +28,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Controller
 @ExposesResourceFor(CellLine.class)
-@RequestMapping(value = "/api/cellline", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/celllines", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CellLineController {
 	
 	@Autowired

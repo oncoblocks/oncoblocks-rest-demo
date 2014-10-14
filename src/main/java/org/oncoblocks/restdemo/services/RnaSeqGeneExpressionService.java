@@ -19,6 +19,10 @@ public class RnaSeqGeneExpressionService {
 	@Autowired
 	private RnaSeqGeneExpressionDao rnaSeqGeneExpressionDao;
 	
+	public RnaSeqGeneExpression findRnaSeqGeneExpressionById(Integer id){
+		return rnaSeqGeneExpressionDao.findRnaSeqGeneExpressionById(id);
+	}
+	
 	public List<RnaSeqGeneExpression> findAllRnaSeqGeneExpression(){
 		return rnaSeqGeneExpressionDao.findAllRnaSeqGeneExpression();
 	}

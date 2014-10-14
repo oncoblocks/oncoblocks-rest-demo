@@ -2,6 +2,7 @@ package org.oncoblocks.restdemo.hateoas;
 
 import org.oncoblocks.restdemo.controllers.CellLineController;
 import org.oncoblocks.restdemo.controllers.EntrezGeneController;
+import org.oncoblocks.restdemo.controllers.RnaSeqGeneExpressionController;
 import org.oncoblocks.restdemo.models.RnaSeqGeneExpression;
 import org.springframework.stereotype.Component;
 import org.springframework.hateoas.Link;
@@ -26,12 +27,16 @@ public class RnaSeqGeneExpressionResourceAssembler
 			RnaSeqGeneExpression rnaSeqGeneExpression) {
 		
 		Resource<RnaSeqGeneExpression> rnaSeqGeneExpressionResource = new Resource<>(rnaSeqGeneExpression);
+		Link selfLink = linkTo(methodOn(RnaSeqGeneExpressionController.class)
+				.findRnaSeqGeneExpressionById(rnaSeqGeneExpression.getRnaSeqGeneExpressionId()))
+				.withSelfRel();
 		Link entrezGeneLink = linkTo(methodOn(entrezGeneControllerClass)
 				.findEntrezGeneById(rnaSeqGeneExpression.getEntrezGeneId()))
-				.withRel("gene");
+				.withRel("entrezGene");
 		Link cellLineLink = linkTo(methodOn(cellLineControllerClass)
 				.findCellLineById(rnaSeqGeneExpression.getCellLineId()))
 				.withRel("cellLine");
+		rnaSeqGeneExpressionResource.add(selfLink);
 		rnaSeqGeneExpressionResource.add(entrezGeneLink);
 		rnaSeqGeneExpressionResource.add(cellLineLink);
 		

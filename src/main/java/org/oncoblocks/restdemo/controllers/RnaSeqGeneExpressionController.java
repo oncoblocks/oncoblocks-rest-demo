@@ -1,7 +1,13 @@
 package org.oncoblocks.restdemo.controllers;
 
+import org.oncoblocks.restdemo.hateoas.CellLineResourceAssembler;
+import org.oncoblocks.restdemo.hateoas.EntrezGeneResourceAssembler;
 import org.oncoblocks.restdemo.hateoas.RnaSeqGeneExpressionResourceAssembler;
+import org.oncoblocks.restdemo.models.CellLine;
+import org.oncoblocks.restdemo.models.EntrezGene;
 import org.oncoblocks.restdemo.models.RnaSeqGeneExpression;
+import org.oncoblocks.restdemo.services.CellLineService;
+import org.oncoblocks.restdemo.services.EntrezGeneService;
 import org.oncoblocks.restdemo.services.RnaSeqGeneExpressionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -34,8 +40,43 @@ public class RnaSeqGeneExpressionController {
 	private RnaSeqGeneExpressionService rnaSeqGeneExpressionService;
 	
 	@Autowired
+	private CellLineService cellLineService;
+	
+	@Autowired
+	private EntrezGeneService entrezGeneService;
+	
+	@Autowired
 	private RnaSeqGeneExpressionResourceAssembler rnaSeqGeneExpressionResourceAssembler;
+	
+	@Autowired
+	private CellLineResourceAssembler cellLineResourceAssembler;
+	
+	@Autowired
+	private EntrezGeneResourceAssembler entrezGeneResourceAssembler;
 
+	//// Get instance
+	
+	/**
+	 * Returns a single rnaseq gene expression data record
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public HttpEntity<Resource<RnaSeqGeneExpression>> findRnaSeqGeneExpressionById(@PathVariable("id") Integer id){
+		
+		RnaSeqGeneExpression rnaSeqGeneExpression = rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(id);
+		
+		if (rnaSeqGeneExpression == null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		Resource<RnaSeqGeneExpression> resource = rnaSeqGeneExpressionResourceAssembler.toResource(rnaSeqGeneExpression);
+		return new ResponseEntity<>(resource, HttpStatus.OK);
+		
+	}
+	
+	//// Get collection
+	
 	/**
 	 * Returns all RnaSeqGeneExpression records ... probably not advisable
 	 * @return
@@ -96,7 +137,92 @@ public class RnaSeqGeneExpressionController {
 		return new ResponseEntity<>(resources, HttpStatus.OK);
 		
 	}
+	
+	//// Relationships
+	
+	@RequestMapping(value = "/{id}/celllines/{cellLineId}", method = RequestMethod.GET)
+	public HttpEntity<Resource<CellLine>> findRnaSeqGeneExpressionCellLine(
+			@PathVariable("id") Integer rnaSeqGeneExpressionId, 
+			@PathVariable("cellLineId") Integer cellLineId){
+		
+		RnaSeqGeneExpression rnaSeqGeneExpression 
+				= rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId);
+		
+		if (rnaSeqGeneExpression == null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		CellLine cellLine = cellLineService.findCellLineById(cellLineId);
+		
+		if (cellLine == null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		Resource<CellLine> resource = cellLineResourceAssembler.toResource(cellLine);
+		resource.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
+				.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId))
+				.withRel("rnaSeqGeneExpression"));
+		
+		return new ResponseEntity<>(resource, HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(value = "/{id}/celllines", method = RequestMethod.GET)
+	public HttpEntity<Resource<CellLine>> findRNaSeqGeneExpressionCellLines(@PathVariable("id") Integer id){
+		
+		RnaSeqGeneExpression rnaSeqGeneExpression = rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(id);
+		
+		if (rnaSeqGeneExpression == null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return findRnaSeqGeneExpressionCellLine(id, rnaSeqGeneExpression.getCellLineId());
+		
+	}
+	
+	@RequestMapping(value = "/{id}/genes/{entrezGeneId}", method = RequestMethod.GET)
+	public HttpEntity<Resource<EntrezGene>> findRnaSeqGeneExpressionEntrezGene(
+			@PathVariable("id") Integer rnaSeqGeneExpressionId, 
+			@PathVariable("entrezGeneId") Integer entrezGeneId){
+		
+		RnaSeqGeneExpression rnaSeqGeneExpression 
+				= rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId);
+		
+		if (rnaSeqGeneExpression == null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		EntrezGene entrezGene = entrezGeneService.findEntrezGeneById(entrezGeneId);
+		
+		if (entrezGene == null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		Resource<EntrezGene> resource = entrezGeneResourceAssembler.toResource(entrezGene);
+		resource.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
+				.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId))
+				.withRel("rnaSeqGeneExpression"));
+		
+		return new ResponseEntity<>(resource, HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(value = "/{id}/genes", method = RequestMethod.GET)
+	public HttpEntity<Resource<EntrezGene>> findRnaSeqGeneExpressionEntrezGenes(@PathVariable("id") Integer id){
+		
+		RnaSeqGeneExpression rnaSeqGeneExpression = rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(id);
+		
+		if (rnaSeqGeneExpression == null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return findRnaSeqGeneExpressionEntrezGene(id, rnaSeqGeneExpression.getEntrezGeneId());
+		
+	}
 
+	
+	
+	
 	// Add rna seq gene expression
 	/*
 	@RequestMapping(value = "", method = RequestMethod.POST)

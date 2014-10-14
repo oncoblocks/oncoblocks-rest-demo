@@ -2,6 +2,7 @@ package org.oncoblocks.restdemo.dao;
 
 import org.oncoblocks.restdemo.models.RnaSeqGeneExpression;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -26,6 +27,18 @@ public class RnaSeqGeneExpressionDao {
 	@Autowired
 	public void setDataSource(DataSource dataSource){
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+	
+	// Get by ID
+	public RnaSeqGeneExpression findRnaSeqGeneExpressionById(Integer id){
+		try {
+			return jdbcTemplate.queryForObject(
+					"SELECT * FROM `RNASEQ_GENE_EXPRESSION` WHERE RNASEQ_GENE_EXPRESSION_ID = ?",
+					new Object[]{id},
+					new RnaSeqGeneExpressionRowMapper());
+		} catch (EmptyResultDataAccessException e){
+			return null;
+		} 
 	}
 
 	// Find all
@@ -78,6 +91,7 @@ public class RnaSeqGeneExpressionDao {
 			
 			RnaSeqGeneExpression rnaSeqGeneExpression = new RnaSeqGeneExpression();
 			
+			rnaSeqGeneExpression.setRnaSeqGeneExpressionId(resultSet.getInt("rnaseq_gene_expression_id"));
 			rnaSeqGeneExpression.setCellLineId(resultSet.getInt("cell_line_id"));
 			rnaSeqGeneExpression.setEntrezGeneId(resultSet.getInt("entrez_gene_id"));
 			rnaSeqGeneExpression.setAccession(resultSet.getString("accession"));
