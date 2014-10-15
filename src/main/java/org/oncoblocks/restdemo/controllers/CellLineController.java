@@ -1,5 +1,8 @@
 package org.oncoblocks.restdemo.controllers;
 
+import org.oncoblocks.restdemo.exceptions.MalformedEntityException;
+import org.oncoblocks.restdemo.exceptions.RequestFailureException;
+import org.oncoblocks.restdemo.exceptions.ResourceNotFoundException;
 import org.oncoblocks.restdemo.hateoas.CellLineResourceAssembler;
 import org.oncoblocks.restdemo.models.CellLine;
 import org.oncoblocks.restdemo.services.CellLineService;
@@ -69,7 +72,7 @@ public class CellLineController {
 		CellLine cellLine = cellLineService.findCellLineById(id);
 		
 		if (cellLine == null){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(40401, "The requested resource is not available.", "No CellLine record found with ID: " + id, "");
 		}
 		
 		return new ResponseEntity<>(cellLineResourceAssembler.toResource(cellLine), HttpStatus.OK);
@@ -112,7 +115,11 @@ public class CellLineController {
 		if (cellLine.getCellLineId() != null && cellLine.getCellLineId() > 0){
 			return new ResponseEntity<>(resource, HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>(resource, HttpStatus.BAD_REQUEST);
+			throw new RequestFailureException(
+					40001,
+					"The provided entity could not be created.",
+					"The provided CellLine entity could not be created. ",
+					"");
 		}
 	}
 
@@ -122,17 +129,23 @@ public class CellLineController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public HttpEntity<Resource<CellLine>> updateCellLine(@RequestBody CellLine cellLine){
+	public HttpEntity<Resource<CellLine>> updateCellLine(
+			@RequestBody CellLine cellLine,
+			@PathVariable("id") Integer id){
 		
 		Integer rowCount = cellLineService.updateCellLine(cellLine);
 		Resource<CellLine> resource = cellLineResourceAssembler.toResource(cellLine);
 		
 		if (rowCount == 0) {
-			return new ResponseEntity<>(resource, HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(40401, "The requested resource is not available.", "No CellLine record found with ID: " + id, "");
 		} else if (rowCount > 0){
 			return new ResponseEntity<>(resource, HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>(resource, HttpStatus.NOT_ACCEPTABLE);
+			throw new MalformedEntityException(
+					40601,
+					"The provided entity is malformed or incomplete and could not be updated.",
+					"The provided EntrezGene entity is malformed or incomplete and could not be updated.",
+					"");
 		}
 		
 	}
@@ -148,7 +161,7 @@ public class CellLineController {
 		Integer rowCount = cellLineService.deleteCellLine(id);
 		
 		if (rowCount == null || rowCount < 1){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(40401, "The requested resource is not available.", "No CellLine record found with ID: " + id, "");
 		} else {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}

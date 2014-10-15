@@ -1,5 +1,6 @@
 package org.oncoblocks.restdemo.controllers;
 
+import org.oncoblocks.restdemo.exceptions.ResourceNotFoundException;
 import org.oncoblocks.restdemo.hateoas.CellLineResourceAssembler;
 import org.oncoblocks.restdemo.hateoas.EntrezGeneResourceAssembler;
 import org.oncoblocks.restdemo.hateoas.RnaSeqGeneExpressionResourceAssembler;
@@ -67,7 +68,7 @@ public class RnaSeqGeneExpressionController {
 		RnaSeqGeneExpression rnaSeqGeneExpression = rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(id);
 		
 		if (rnaSeqGeneExpression == null){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(40401, "The requested resource is not available.", "No RnaSeqGeneExpression record found with ID: " + id, "");
 		}
 		
 		Resource<RnaSeqGeneExpression> resource = rnaSeqGeneExpressionResourceAssembler.toResource(rnaSeqGeneExpression);
@@ -149,13 +150,19 @@ public class RnaSeqGeneExpressionController {
 				= rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId);
 		
 		if (rnaSeqGeneExpression == null){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(40401, 
+					"The requested resource is not available.", 
+					"No RnaSeqGeneExpression record found with ID: " + rnaSeqGeneExpressionId, 
+					"");
 		}
 		
 		CellLine cellLine = cellLineService.findCellLineById(cellLineId);
 		
 		if (cellLine == null){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(40402, 
+					"The requested resource is not available.", 
+					"No CellLine record with ID: " + cellLineId + " is associated with RnaSeqGeneExpression record: " + rnaSeqGeneExpressionId, 
+					"");
 		}
 		
 		Resource<CellLine> resource = cellLineResourceAssembler.toResource(cellLine);
@@ -173,7 +180,10 @@ public class RnaSeqGeneExpressionController {
 		RnaSeqGeneExpression rnaSeqGeneExpression = rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(id);
 		
 		if (rnaSeqGeneExpression == null){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(40401,
+					"The requested resource is not available.",
+					"No RnaSeqGeneExpression record found with ID: " + id,
+					"");
 		}
 		
 		return findRnaSeqGeneExpressionCellLine(id, rnaSeqGeneExpression.getCellLineId());
@@ -189,13 +199,19 @@ public class RnaSeqGeneExpressionController {
 				= rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId);
 		
 		if (rnaSeqGeneExpression == null){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(40401,
+					"The requested resource is not available.",
+					"No RnaSeqGeneExpression record found with ID: " + rnaSeqGeneExpressionId,
+					"");
 		}
 		
 		EntrezGene entrezGene = entrezGeneService.findEntrezGeneById(entrezGeneId);
 		
 		if (entrezGene == null){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(40402,
+					"The requested resource is not available.",
+					"No EntrezGene record with ID: " + entrezGeneId + " is associated with RnaSeqGeneExpression record: " + rnaSeqGeneExpressionId,
+					"");
 		}
 		
 		Resource<EntrezGene> resource = entrezGeneResourceAssembler.toResource(entrezGene);
@@ -213,7 +229,10 @@ public class RnaSeqGeneExpressionController {
 		RnaSeqGeneExpression rnaSeqGeneExpression = rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(id);
 		
 		if (rnaSeqGeneExpression == null){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(40401,
+					"The requested resource is not available.",
+					"No RnaSeqGeneExpression record found with ID: " + id,
+					"");
 		}
 		
 		return findRnaSeqGeneExpressionEntrezGene(id, rnaSeqGeneExpression.getEntrezGeneId());

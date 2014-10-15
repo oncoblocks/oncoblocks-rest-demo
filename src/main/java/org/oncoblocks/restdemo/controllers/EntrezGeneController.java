@@ -1,5 +1,8 @@
 package org.oncoblocks.restdemo.controllers;
 
+import org.oncoblocks.restdemo.exceptions.MalformedEntityException;
+import org.oncoblocks.restdemo.exceptions.RequestFailureException;
+import org.oncoblocks.restdemo.exceptions.ResourceNotFoundException;
 import org.oncoblocks.restdemo.hateoas.EntrezGeneResourceAssembler;
 import org.oncoblocks.restdemo.models.EntrezGene;
 import org.oncoblocks.restdemo.services.EntrezGeneService;
@@ -59,7 +62,11 @@ public class EntrezGeneController {
 		EntrezGene entrezGene = entrezGeneService.findEntrezGeneById(id);
 		
 		if (entrezGene == null){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(
+					40401, 
+					"The requested resource is not available.", 
+					"No EntrezGene record found with ID: " + id, 
+					"");
 		}
 		
 		Resource<EntrezGene> entrezGeneResource = entrezGeneResourceAssembler.toResource(entrezGene);
@@ -95,24 +102,38 @@ public class EntrezGeneController {
 		if (entrezGene.getEntrezGeneId() != null && entrezGene.getEntrezGeneId() > 0){
 			return new ResponseEntity<>(entrezGeneResourceAssembler.toResource(entrezGene), HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>(entrezGeneResourceAssembler.toResource(entrezGene), HttpStatus.BAD_REQUEST);
+			throw new RequestFailureException(
+					40001, 
+					"The provided entity could not be created.", 
+					"The provided EntrezGene entity could not be created. ",
+					"");
 		}
 		
 	}
 	
 	// Update gene
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public HttpEntity<Resource<EntrezGene>> updateEntrezGene(@RequestBody EntrezGene entrezGene){
+	public HttpEntity<Resource<EntrezGene>> updateEntrezGene(
+			@RequestBody EntrezGene entrezGene,
+			@PathVariable("id") Integer id){
 		
 		Integer rowCount = entrezGeneService.updateEntrezGene(entrezGene);
 		Resource<EntrezGene> resource = entrezGeneResourceAssembler.toResource(entrezGene);
 		
 		if (rowCount == 0) {
-			return new ResponseEntity<>(resource, HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(
+					40401, 
+					"The requested resource is not available.", 
+					"No EntrezGene record found with ID: " + id, 
+					"");
 		} else if (rowCount > 0){
 			return new ResponseEntity<>(resource, HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>(resource, HttpStatus.NOT_ACCEPTABLE);
+			throw new MalformedEntityException(
+					40601, 
+					"The provided entity is malformed or incomplete and could not be updated.",
+					"The provided EntrezGene entity is malformed or incomplete and could not be updated.",
+					"");
 		}
 		
 	}
@@ -124,7 +145,11 @@ public class EntrezGeneController {
 		Integer rowCount = entrezGeneService.deleteEntrezGene(id);
 		
 		if (rowCount == null || rowCount < 1){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ResourceNotFoundException(
+					40401, 
+					"The requested resource is not available.", 
+					"No EntrezGene record found with ID: " + id, 
+					"");
 		} else {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
