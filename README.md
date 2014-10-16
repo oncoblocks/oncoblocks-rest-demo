@@ -7,6 +7,8 @@ This application is an early, experimental build of a RESTful web service meant 
 
 Running
 -------
+To run locally, no configuration is needed.  This demo uses an embedded in-memory H2 database, which is automatically built when deployed.  Navigating to the application's root URL will redirect to the Swagger API documentation main page, allowing for easy testing of the web services capabilities.
+
 Build the project with maven and deploy in Tomcat or another web app container:
 
 ```
