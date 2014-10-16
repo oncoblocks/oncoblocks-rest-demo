@@ -17,10 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -31,7 +29,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Controller
 @ExposesResourceFor(CellLine.class)
-@RequestMapping(value = "/api/celllines", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/celllines", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CellLineController {
 	
 	@Autowired
