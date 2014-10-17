@@ -1,8 +1,12 @@
 package org.oncoblocks.restdemo.models;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * Created by woemler on 10/2/14.
  */
+
+@XStreamAlias("cellLine")
 public class CellLine {
 	
 	private Integer cellLineId;

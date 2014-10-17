@@ -16,7 +16,6 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +35,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Controller
 @ExposesResourceFor(RnaSeqGeneExpression.class)
-@RequestMapping(value = "/api/v1/expression/gene/rnaseq", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/expression/gene/rnaseq", produces = {"application/json", "application/xml"})
 public class RnaSeqGeneExpressionController {
 	
 	@Autowired

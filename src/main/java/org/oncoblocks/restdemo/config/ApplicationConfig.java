@@ -1,12 +1,22 @@
 package org.oncoblocks.restdemo.config;
 
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
+import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by woemler on 10/8/14.
@@ -46,10 +56,33 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
 				new ClassPathResource("config/app.properties"));
 		return bean;
 	}
-	
+
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter< ?>> converters) {
+
+		List<MediaType> mediaType = new ArrayList<>();
+		mediaType.add(MediaType.APPLICATION_XML);
+
+		MarshallingHttpMessageConverter xmlConverter = new MarshallingHttpMessageConverter();
+		xmlConverter.setSupportedMediaTypes(mediaType);
+
+		XStreamMarshaller xstreamMarshaller = new XStreamMarshaller();
+		xmlConverter.setMarshaller(xstreamMarshaller);
+		xmlConverter.setUnmarshaller(xstreamMarshaller);
+
+		converters.add(xmlConverter);
+
+		MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+		converters.add(jsonConverter);
+		
+	}
+
+
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer){
 		configurer.defaultContentType(MediaType.APPLICATION_JSON);
+		configurer.favorPathExtension(true);
+		configurer.ignoreAcceptHeader(true);
 	}
 	
 }

@@ -1,12 +1,15 @@
 package org.oncoblocks.restdemo.models;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.*;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by woemler on 9/23/14.
  */
 
+@XStreamAlias("entrezGene")
 public class EntrezGene {
 	
 	private Integer entrezGeneId;
