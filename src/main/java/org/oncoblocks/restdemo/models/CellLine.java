@@ -2,12 +2,15 @@ package org.oncoblocks.restdemo.models;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Created by woemler on 10/2/14.
  */
 
 @XStreamAlias("cellLine")
-public class CellLine {
+public class CellLine implements RestEntity {
 	
 	private Integer cellLineId;
 	private String ccleName;
@@ -90,4 +93,37 @@ public class CellLine {
 	public void setSource(String source) {
 		this.source = source;
 	}
+
+	@Override 
+	public LinkedHashMap<String, Object> getAttributes() {
+		LinkedHashMap<String,Object> attributes = new LinkedHashMap<>();
+		attributes.put("cellLineId", this.cellLineId);
+		attributes.put("ccleName", this.ccleName);
+		attributes.put("primaryName", this.primaryName);
+		attributes.put("gender", this.gender);
+		attributes.put("primarySite", this.primarySite);
+		attributes.put("primaryHistology", this.primaryHistology);
+		attributes.put("histologySubtype", this.histologySubtype);
+		attributes.put("notes", this.notes);
+		attributes.put("source", this.source);
+		return attributes;
+	}
+
+	@Override
+	public String toText(String delimiter, boolean showHeader) {
+		StringBuffer buffer = new StringBuffer();
+		LinkedHashMap<String,Object> attributes = this.getAttributes();
+		if (showHeader){
+			for (Map.Entry entry: attributes.entrySet()){
+				buffer.append(entry.getKey() + delimiter);
+			}
+			buffer.append("\n");
+		}
+		for (Map.Entry entry: attributes.entrySet()){
+			buffer.append(entry.getValue() + delimiter);
+		}
+		buffer.append("\n");
+		return buffer.toString();
+	}
+	
 }

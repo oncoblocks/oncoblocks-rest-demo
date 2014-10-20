@@ -1,5 +1,6 @@
 package org.oncoblocks.restdemo.config;
 
+import org.oncoblocks.restdemo.util.TextMessageConverter;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,6 +16,7 @@ import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +62,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter< ?>> converters) {
 
+		// XML
 		List<MediaType> mediaType = new ArrayList<>();
 		mediaType.add(MediaType.APPLICATION_XML);
 
@@ -72,8 +75,20 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
 
 		converters.add(xmlConverter);
 
+		// JSON
 		MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
 		converters.add(jsonConverter);
+		
+		// Text
+		TextMessageConverter textConverter = 
+				new TextMessageConverter(new MediaType("text", "plain", Charset.forName("utf-8")));
+		textConverter.setDelimiter("\t");
+		converters.add(textConverter);
+
+		TextMessageConverter csvConverter = 
+				new TextMessageConverter(new MediaType("text", "csv", Charset.forName("utf-8")));
+		csvConverter.setDelimiter(",");
+		converters.add(csvConverter);
 		
 	}
 
@@ -83,6 +98,8 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
 		configurer.defaultContentType(MediaType.APPLICATION_JSON);
 		configurer.favorPathExtension(true);
 		configurer.ignoreAcceptHeader(true);
+		configurer.mediaType("txt", MediaType.TEXT_PLAIN);
+		configurer.mediaType("csv", new MediaType("text", "csv"));
 	}
 	
 }

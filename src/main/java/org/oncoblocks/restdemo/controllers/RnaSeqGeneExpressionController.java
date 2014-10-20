@@ -35,7 +35,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Controller
 @ExposesResourceFor(RnaSeqGeneExpression.class)
-@RequestMapping(value = "/api/v1/expression/gene/rnaseq", produces = {"application/json", "application/xml"})
+@RequestMapping(value = "/api/v1/expression/gene/rnaseq", produces = {"application/json", "application/xml", "text/plain", "text/csv"})
 public class RnaSeqGeneExpressionController {
 	
 	@Autowired
