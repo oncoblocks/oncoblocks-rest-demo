@@ -2,7 +2,6 @@ package org.oncoblocks.restdemo.models;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,7 +10,7 @@ import java.util.Set;
  */
 
 @XStreamAlias("entrezGene")
-public class EntrezGene implements RestEntity {
+public class EntrezGene extends RestEntity {
 	
 	private Integer entrezGeneId;
 	private Integer taxId;
@@ -124,38 +123,4 @@ public class EntrezGene implements RestEntity {
 		this.cgcGene = isCgcGene;
 	}
 
-	@Override 
-	public LinkedHashMap<String, Object> getAttributes() {
-		LinkedHashMap<String,Object> attributes = new LinkedHashMap<>();
-		attributes.put("entrezGeneId", this.entrezGeneId);
-		attributes.put("taxId", this.taxId);
-		attributes.put("locusTag", this.locusTag);
-		attributes.put("primaryGeneSymbol", this.primaryGeneSymbol);
-		attributes.put("chromosome", this.chromosome);
-		attributes.put("chromosomeLocation", this.chromosomeLocation);
-		attributes.put("geneType", this.geneType);
-		attributes.put("description", this.description);
-		attributes.put("databaseCrossReferences", this.databaseCrossReferences);
-		attributes.put("geneSymbolAliases", this.geneSymbolAliases);
-		attributes.put("kinase", this.kinase);
-		attributes.put("cgcGene", this.cgcGene);
-		return attributes;
-	}
-
-	@Override 
-	public String toText(String delimiter, boolean showHeader) {
-		StringBuffer buffer = new StringBuffer();
-		LinkedHashMap<String,Object> attributes = this.getAttributes();
-		if (showHeader){
-			for (Map.Entry entry: attributes.entrySet()){
-				buffer.append(entry.getKey() + delimiter);
-			}
-			buffer.append("\n");
-		}
-		for (Map.Entry entry: attributes.entrySet()){
-			buffer.append(entry.getValue() + delimiter);
-		}
-		buffer.append("\n");
-		return buffer.toString();
-	}
 }
