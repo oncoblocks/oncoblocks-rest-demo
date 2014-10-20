@@ -30,6 +30,16 @@
         <servlet-name>dispatcher-servlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    
+    <filter>
+        <filter-name>cors</filter-name>
+        <filter-class>org.oncoblocks.restdemo.util.CorsFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>cors</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
 
     <!-- Logging -->
     <context-param>
