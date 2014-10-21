@@ -70,13 +70,25 @@ public class TextMessageConverter extends AbstractHttpMessageConverter<Object> {
 				showHeader = false;
 			}
 			
-		} else {
-
+		} else if (o.getClass().equals(Resource.class)) {
+		
 			// Single Resource object
 			Object entity = ((Resource<RestEntity>) o).getContent();
 			String entityString;
 			try {
 				entityString = printEntityRecord(entity, this.delimiter, true);
+			} catch (IllegalAccessException e){
+				e.printStackTrace();
+				entityString = "# Invalid record.";
+			}
+			writer.write(entityString);
+			
+		} else {
+			
+			// Any other POJO
+			String entityString;
+			try {
+				entityString = printEntityRecord(o, this.delimiter, true);
 			} catch (IllegalAccessException e){
 				e.printStackTrace();
 				entityString = "# Invalid record.";
