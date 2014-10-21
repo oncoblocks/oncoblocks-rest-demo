@@ -31,6 +31,13 @@ import java.util.List;
 @ComponentScan(basePackages = {"org.oncoblocks.restdemo"})
 public class ApplicationConfig extends WebMvcConfigurerAdapter {
 	
+	/*
+	@Override
+	public void addInterceptors(final InterceptorRegistry registry){
+		registry.addInterceptor(new FieldFilterInterceptor());
+	}
+	*/
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry){
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
@@ -77,6 +84,8 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
 
 		// JSON
 		MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+		//FilteringJackson2HttpMessageConverter jsonConverter = new FilteringJackson2HttpMessageConverter();
+		jsonConverter.setPrettyPrint(true);
 		converters.add(jsonConverter);
 		
 		// Text
