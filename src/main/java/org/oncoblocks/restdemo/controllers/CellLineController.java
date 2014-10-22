@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -64,9 +66,16 @@ public class CellLineController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public HttpEntity<Resource<CellLine>> findCellLineById(@PathVariable("id") Integer id){
+	public HttpEntity<Resource<CellLine>> findCellLineById(@PathVariable("id") Integer id, @RequestParam(value = "fields", required = false) String fields){
 		
 		CellLine cellLine = cellLineService.findCellLineById(id);
+		Set<String> fieldSet = new HashSet<>();
+		if (fields != null){
+			for (String field: fields.split(",")){
+				fieldSet.add(field);
+			}
+		}
+		cellLine.setFieldSet(fieldSet);
 		
 		if (cellLine == null){
 			throw new ResourceNotFoundException(40401, "The requested resource is not available.", "No CellLine record found with ID: " + id, "");

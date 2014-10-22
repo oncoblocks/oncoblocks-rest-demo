@@ -1,5 +1,6 @@
 package org.oncoblocks.restdemo.models;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -7,6 +8,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  */
 
 @XStreamAlias("cellLine")
+@JsonRootName("cellLine")
 public class CellLine extends RestEntity {
 	
 	private Integer cellLineId;

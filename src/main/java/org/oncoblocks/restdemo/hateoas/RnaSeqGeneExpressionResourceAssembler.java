@@ -34,7 +34,7 @@ public class RnaSeqGeneExpressionResourceAssembler
 				.findEntrezGeneById(rnaSeqGeneExpression.getEntrezGeneId()))
 				.withRel("entrezGene");
 		Link cellLineLink = linkTo(methodOn(cellLineControllerClass)
-				.findCellLineById(rnaSeqGeneExpression.getCellLineId()))
+				.findCellLineById(rnaSeqGeneExpression.getCellLineId(), null))
 				.withRel("cellLine");
 		rnaSeqGeneExpressionResource.add(selfLink);
 		rnaSeqGeneExpressionResource.add(entrezGeneLink);

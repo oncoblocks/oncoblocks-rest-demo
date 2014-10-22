@@ -22,7 +22,7 @@ public class CellLineResourceAssembler implements ResourceAssembler<CellLine, Re
 	@Override public Resource<CellLine> toResource(CellLine cellLine) {
 		Integer cellLineId = cellLine.getCellLineId();
 		Resource<CellLine> cellLineResource = new Resource<>(cellLine);
-		Link selfLink = linkTo(methodOn(controllerClass).findCellLineById(cellLineId)).withSelfRel();
+		Link selfLink = linkTo(methodOn(controllerClass).findCellLineById(cellLineId,null)).withSelfRel();
 		cellLineResource.add(selfLink);
 		return cellLineResource;
 	}
