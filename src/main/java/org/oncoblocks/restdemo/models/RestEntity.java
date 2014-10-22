@@ -2,6 +2,7 @@ package org.oncoblocks.restdemo.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
@@ -25,7 +26,7 @@ import java.util.Set;
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE,
 		setterVisibility = JsonAutoDetect.Visibility.NONE
 )
-public class RestEntity {
+public class RestEntity extends ResourceSupport {
 	
 	private Set<String> fieldSet;
 

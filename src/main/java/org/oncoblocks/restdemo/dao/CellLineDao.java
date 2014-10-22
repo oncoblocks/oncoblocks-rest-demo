@@ -32,7 +32,7 @@ public class CellLineDao {
 	}
 
 	// Find all
-	public List<CellLine> findAllCellLines(){
+	public List<CellLine> findAllCellLines(Integer limit, Integer offset){
 		return jdbcTemplate.query("SELECT * FROM `CELL_LINES`", new CellLineRowMapper());
 	}
 
@@ -50,7 +50,7 @@ public class CellLineDao {
 
 	// Find by attributes
 
-	public List<CellLine> findCellLineByCcleName(String ccleName){
+	public List<CellLine> findCellLineByCcleName(String ccleName, Integer limit, Integer offset){
 		return jdbcTemplate.query(
 				"SELECT * FROM `CELL_LINES` WHERE CCLE_NAME = ?",
 				new Object[]{ccleName},

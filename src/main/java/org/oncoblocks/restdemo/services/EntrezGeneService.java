@@ -20,8 +20,8 @@ public class EntrezGeneService {
 	private EntrezGeneDao entrezGeneDao;
 
 	// Find all
-	public List<EntrezGene> findAllEntrezGenes(){
-		return entrezGeneDao.findAllEntrezGenes();
+	public List<EntrezGene> findAllEntrezGenes(Integer limit, Integer offset){
+		return entrezGeneDao.findAllEntrezGenes(limit, offset);
 	}
 
 	// Find by ID
@@ -30,8 +30,8 @@ public class EntrezGeneService {
 	}
 
 	// Find by attribute
-	public List<EntrezGene> findEntrezGenesByGeneSymbol(String geneSymbol){
-		return entrezGeneDao.findEntrezGenesByGeneSymbol(geneSymbol);
+	public List<EntrezGene> findEntrezGenesByGeneSymbol(String geneSymbol, Integer limit, Integer offset){
+		return entrezGeneDao.findEntrezGenesByGeneSymbol(geneSymbol, limit, offset);
 	}
 
 	// Add gene

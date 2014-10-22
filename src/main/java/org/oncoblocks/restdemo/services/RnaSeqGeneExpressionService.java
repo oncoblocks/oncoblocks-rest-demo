@@ -23,16 +23,16 @@ public class RnaSeqGeneExpressionService {
 		return rnaSeqGeneExpressionDao.findRnaSeqGeneExpressionById(id);
 	}
 	
-	public List<RnaSeqGeneExpression> findAllRnaSeqGeneExpression(){
-		return rnaSeqGeneExpressionDao.findAllRnaSeqGeneExpression();
+	public List<RnaSeqGeneExpression> findAllRnaSeqGeneExpression(Integer limit, Integer offset){
+		return rnaSeqGeneExpressionDao.findAllRnaSeqGeneExpression(limit, offset);
 	}
 	
-	public List<RnaSeqGeneExpression> findRnaSeqGeneExpressionByCellLine(Integer cellLineId){
-		return rnaSeqGeneExpressionDao.findRnaSeqGeneExpressionByCellLine(cellLineId);
+	public List<RnaSeqGeneExpression> findRnaSeqGeneExpressionByCellLine(Integer cellLineId, Integer limit, Integer offset){
+		return rnaSeqGeneExpressionDao.findRnaSeqGeneExpressionByCellLine(cellLineId, limit, offset);
 	}
 	
-	public List<RnaSeqGeneExpression> findRnaSeqGeneExpressionByGene(Integer entrezGeneId){
-		return rnaSeqGeneExpressionDao.findRnaSeqGeneExpressionByGene(entrezGeneId);
+	public List<RnaSeqGeneExpression> findRnaSeqGeneExpressionByGene(Integer entrezGeneId, Integer limit, Integer offset){
+		return rnaSeqGeneExpressionDao.findRnaSeqGeneExpressionByGene(entrezGeneId, limit, offset);
 	}
 	
 	public Integer addRnaSeqGeneExpression(RnaSeqGeneExpression rnaSeqGeneExpression){

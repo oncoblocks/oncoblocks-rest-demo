@@ -42,13 +42,13 @@ public class RnaSeqGeneExpressionDao {
 	}
 
 	// Find all
-	public List<RnaSeqGeneExpression> findAllRnaSeqGeneExpression(){
+	public List<RnaSeqGeneExpression> findAllRnaSeqGeneExpression(Integer limit, Integer offset){
 		return jdbcTemplate.query("SELECT * FROM `RNASEQ_GENE_EXPRESSION`", new RnaSeqGeneExpressionRowMapper());
 	}
 
 	// Find by attributes
 
-	public List<RnaSeqGeneExpression> findRnaSeqGeneExpressionByCellLine(Integer cellLineId){
+	public List<RnaSeqGeneExpression> findRnaSeqGeneExpressionByCellLine(Integer cellLineId, Integer limit, Integer offset){
 		return jdbcTemplate.query(
 				"SELECT * FROM `RNASEQ_GENE_EXPRESSION` WHERE CELL_LINE_ID = ?",
 				new Object[] {cellLineId},
@@ -56,7 +56,7 @@ public class RnaSeqGeneExpressionDao {
 		);
 	}
 
-	public List<RnaSeqGeneExpression> findRnaSeqGeneExpressionByGene(Integer entrezGeneId){
+	public List<RnaSeqGeneExpression> findRnaSeqGeneExpressionByGene(Integer entrezGeneId, Integer limit, Integer offset){
 		return jdbcTemplate.query(
 				"SELECT * FROM `RNASEQ_GENE_EXPRESSION` WHERE ENTREZ_GENE_ID = ?",
 				new Object[] {entrezGeneId},

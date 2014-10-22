@@ -35,7 +35,7 @@ public class EntrezGeneDao {
 	 * Returns a list of all EntrezGene records.
 	 * @return
 	 */
-	public List<EntrezGene> findAllEntrezGenes(){
+	public List<EntrezGene> findAllEntrezGenes(Integer limit, Integer offset){
 		return jdbcTemplate.query("SELECT * FROM `ENTREZ_GENE`", new EntrezGeneRowMapper());
 	}
 
@@ -62,7 +62,7 @@ public class EntrezGeneDao {
 	 * @param geneSymbol
 	 * @return
 	 */
-	public List<EntrezGene> findEntrezGenesByGeneSymbol(String geneSymbol){
+	public List<EntrezGene> findEntrezGenesByGeneSymbol(String geneSymbol, Integer limit, Integer offset){
 		return jdbcTemplate.query(
 				"SELECT * FROM `ENTREZ_GENE` WHERE PRIMARY_GENE_SYMBOL = ?", 
 				new Object[]{geneSymbol},

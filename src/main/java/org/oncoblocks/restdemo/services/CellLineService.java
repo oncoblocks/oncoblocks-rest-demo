@@ -20,8 +20,8 @@ public class CellLineService {
 	private CellLineDao cellLineDao;
 
 	// Find all
-	public List<CellLine> findAllCellLines(){
-		return cellLineDao.findAllCellLines();
+	public List<CellLine> findAllCellLines(Integer limit, Integer offset){
+		return cellLineDao.findAllCellLines(limit, offset);
 	}
 
 	// Find by ID
@@ -30,8 +30,8 @@ public class CellLineService {
 	}
 
 	// Find by attributes
-	public List<CellLine> findCellLinesByCcleName(String ccleName){
-		return cellLineDao.findCellLineByCcleName(ccleName);
+	public List<CellLine> findCellLinesByCcleName(String ccleName, Integer limit, Integer offset){
+		return cellLineDao.findCellLineByCcleName(ccleName, limit, offset);
 	}
 
 	// Add cell line

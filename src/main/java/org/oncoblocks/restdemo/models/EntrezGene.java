@@ -1,5 +1,6 @@
 package org.oncoblocks.restdemo.models;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Set;
  */
 
 @XStreamAlias("entrezGene")
+@JsonRootName("entrezGene")
 public class EntrezGene extends RestEntity {
 	
 	private Integer entrezGeneId;

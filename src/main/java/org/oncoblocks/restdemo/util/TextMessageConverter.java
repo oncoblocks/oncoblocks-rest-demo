@@ -1,6 +1,5 @@
 package org.oncoblocks.restdemo.util;
 
-import org.oncoblocks.restdemo.models.RestEntity;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpInputMessage;
@@ -57,8 +56,7 @@ public class TextMessageConverter extends AbstractHttpMessageConverter<Object> {
 
 			// List of Resource objects
 			boolean showHeader = true;
-			for (Resource<Object> resource: (Resources<Resource<Object>>) o){
-				Object entity = resource.getContent();
+			for (Object entity: (Resources<Object>) o){
 				String entityString;
 				try {
 					entityString = printEntityRecord(entity, this.delimiter, showHeader);
@@ -69,19 +67,6 @@ public class TextMessageConverter extends AbstractHttpMessageConverter<Object> {
 				writer.write(entityString);
 				showHeader = false;
 			}
-			
-		} else if (o.getClass().equals(Resource.class)) {
-		
-			// Single Resource object
-			Object entity = ((Resource<RestEntity>) o).getContent();
-			String entityString;
-			try {
-				entityString = printEntityRecord(entity, this.delimiter, true);
-			} catch (IllegalAccessException e){
-				e.printStackTrace();
-				entityString = "# Invalid record.";
-			}
-			writer.write(entityString);
 			
 		} else {
 			

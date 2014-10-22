@@ -1,9 +1,6 @@
 package org.oncoblocks.restdemo.controllers;
 
 import org.oncoblocks.restdemo.exceptions.ResourceNotFoundException;
-import org.oncoblocks.restdemo.hateoas.CellLineResourceAssembler;
-import org.oncoblocks.restdemo.hateoas.EntrezGeneResourceAssembler;
-import org.oncoblocks.restdemo.hateoas.RnaSeqGeneExpressionResourceAssembler;
 import org.oncoblocks.restdemo.models.CellLine;
 import org.oncoblocks.restdemo.models.EntrezGene;
 import org.oncoblocks.restdemo.models.RnaSeqGeneExpression;
@@ -12,7 +9,6 @@ import org.oncoblocks.restdemo.services.EntrezGeneService;
 import org.oncoblocks.restdemo.services.RnaSeqGeneExpressionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
-import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -24,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -46,15 +44,6 @@ public class RnaSeqGeneExpressionController {
 	
 	@Autowired
 	private EntrezGeneService entrezGeneService;
-	
-	@Autowired
-	private RnaSeqGeneExpressionResourceAssembler rnaSeqGeneExpressionResourceAssembler;
-	
-	@Autowired
-	private CellLineResourceAssembler cellLineResourceAssembler;
-	
-	@Autowired
-	private EntrezGeneResourceAssembler entrezGeneResourceAssembler;
 
 	//// Get instance
 	
@@ -64,16 +53,42 @@ public class RnaSeqGeneExpressionController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public HttpEntity<Resource<RnaSeqGeneExpression>> findRnaSeqGeneExpressionById(@PathVariable("id") Integer id){
+	public HttpEntity<RnaSeqGeneExpression> findRnaSeqGeneExpressionById(
+			@PathVariable("id") Integer id,
+			@RequestParam(value = "fields", required = false) String fields){
+
+		Set<String> fieldSet = new HashSet<>();
+		if (fields != null && !fields.equals("")){
+			for (String field: fields.split(",")){
+				fieldSet.add(field);
+			}
+		}
+		boolean showLinks = Boolean.valueOf(fields == null || fieldSet.contains("links"));
 		
 		RnaSeqGeneExpression rnaSeqGeneExpression = rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(id);
 		
 		if (rnaSeqGeneExpression == null){
-			throw new ResourceNotFoundException(40401, "The requested resource is not available.", "No RnaSeqGeneExpression record found with ID: " + id, "");
+			throw new ResourceNotFoundException(
+					40401, 
+					"The requested resource is not available.", 
+					"No RnaSeqGeneExpression record found with ID: " + id, 
+					"");
+		}
+
+		rnaSeqGeneExpression.setFieldSet(fieldSet);
+		if (showLinks) {
+			rnaSeqGeneExpression.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
+					.findRnaSeqGeneExpressionById(rnaSeqGeneExpression.getRnaSeqGeneExpressionId(), fields))
+					.withSelfRel());
+			rnaSeqGeneExpression.add(linkTo(methodOn(EntrezGeneController.class)
+					.findEntrezGeneById(rnaSeqGeneExpression.getEntrezGeneId(), null))
+					.withRel("entrezGene"));
+			rnaSeqGeneExpression.add(linkTo(methodOn(CellLineController.class)
+					.findCellLineById(rnaSeqGeneExpression.getCellLineId(), null))
+					.withRel("cellLine"));
 		}
 		
-		Resource<RnaSeqGeneExpression> resource = rnaSeqGeneExpressionResourceAssembler.toResource(rnaSeqGeneExpression);
-		return new ResponseEntity<>(resource, HttpStatus.OK);
+		return new ResponseEntity<>(rnaSeqGeneExpression, HttpStatus.OK);
 		
 	}
 	
@@ -84,18 +99,43 @@ public class RnaSeqGeneExpressionController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public HttpEntity<Resources<Resource<RnaSeqGeneExpression>>> findAllRnaSeqGeneExpression(){
+	public HttpEntity<Resources<RnaSeqGeneExpression>> findAllRnaSeqGeneExpression(
+			@RequestParam(value = "limit", required = false) Integer limit,
+			@RequestParam(value = "offset", required = false) Integer offset,
+			@RequestParam(value = "fields", required = false) String fields){
 
-		Collection<Resource<RnaSeqGeneExpression>> resourceCollection = new ArrayList<>();
+		Set<String> fieldSet = new HashSet<>();
+		if (fields != null && !fields.equals("")){
+			for (String field: fields.split(",")){
+				fieldSet.add(field);
+			}
+		}
+		boolean showLinks = Boolean.valueOf(fields == null || fieldSet.contains("links"));
+
+		List<RnaSeqGeneExpression> rnaSeqGeneExpressionList = new ArrayList<>();
 		
-		for (RnaSeqGeneExpression rnaSeqGeneExpression: rnaSeqGeneExpressionService.findAllRnaSeqGeneExpression()){
-			resourceCollection.add(rnaSeqGeneExpressionResourceAssembler.toResource(rnaSeqGeneExpression));
+		for (RnaSeqGeneExpression rnaSeqGeneExpression: rnaSeqGeneExpressionService.findAllRnaSeqGeneExpression(limit, offset)){
+			rnaSeqGeneExpression.setFieldSet(fieldSet);
+			if (showLinks) {
+				rnaSeqGeneExpression.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
+						.findRnaSeqGeneExpressionById(rnaSeqGeneExpression.getRnaSeqGeneExpressionId(), fields))
+						.withSelfRel());
+				rnaSeqGeneExpression.add(linkTo(methodOn(EntrezGeneController.class)
+						.findEntrezGeneById(rnaSeqGeneExpression.getEntrezGeneId(), null))
+						.withRel("entrezGene"));
+				rnaSeqGeneExpression.add(linkTo(methodOn(CellLineController.class)
+						.findCellLineById(rnaSeqGeneExpression.getCellLineId(), null))
+						.withRel("cellLine"));
+			}
+			rnaSeqGeneExpressionList.add(rnaSeqGeneExpression);
 		}
 		
-		Resources<Resource<RnaSeqGeneExpression>> resources = new Resources<>(resourceCollection);
-		resources.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
-				.findAllRnaSeqGeneExpression())
-				.withSelfRel());
+		Resources<RnaSeqGeneExpression> resources = new Resources<>(rnaSeqGeneExpressionList);
+		if (showLinks){
+			resources.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
+					.findAllRnaSeqGeneExpression(limit, offset, fields))
+					.withSelfRel());
+		}
 		
 		return new ResponseEntity<>(resources, HttpStatus.OK);
 		
@@ -103,49 +143,108 @@ public class RnaSeqGeneExpressionController {
 
 	// Find by attributes
 	@RequestMapping(value = "", method = RequestMethod.GET, params = {"cellLineId"})
-	public HttpEntity<Resources<Resource<RnaSeqGeneExpression>>> findRnaSeqGeneExpressionByCellLine(@RequestParam("cellLineId") Integer cellLineId){
+	public HttpEntity<Resources<RnaSeqGeneExpression>> findRnaSeqGeneExpressionByCellLine(
+			@RequestParam("cellLineId") Integer cellLineId,
+			@RequestParam(value = "limit", required = false) Integer limit,
+			@RequestParam(value = "offset", required = false) Integer offset,
+			@RequestParam(value = "fields", required = false) String fields){
 
-		Collection<Resource<RnaSeqGeneExpression>> resourceCollection = new ArrayList<>();
+		Set<String> fieldSet = new HashSet<>();
+		if (fields != null && !fields.equals("")){
+			for (String field: fields.split(",")){
+				fieldSet.add(field);
+			}
+		}
+		boolean showLinks = Boolean.valueOf(fields == null || fieldSet.contains("links"));
 
-		for (RnaSeqGeneExpression rnaSeqGeneExpression: rnaSeqGeneExpressionService.findRnaSeqGeneExpressionByCellLine(
-				cellLineId)){
-			resourceCollection.add(rnaSeqGeneExpressionResourceAssembler.toResource(rnaSeqGeneExpression));
+		List<RnaSeqGeneExpression> rnaSeqGeneExpressionList = new ArrayList<>();
+
+		for (RnaSeqGeneExpression rnaSeqGeneExpression: rnaSeqGeneExpressionService.findRnaSeqGeneExpressionByCellLine(cellLineId, limit, offset)){
+			rnaSeqGeneExpression.setFieldSet(fieldSet);
+			if (showLinks) {
+				rnaSeqGeneExpression.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
+						.findRnaSeqGeneExpressionById(rnaSeqGeneExpression.getRnaSeqGeneExpressionId(), fields))
+						.withSelfRel());
+				rnaSeqGeneExpression.add(linkTo(methodOn(EntrezGeneController.class)
+						.findEntrezGeneById(rnaSeqGeneExpression.getEntrezGeneId(), null))
+						.withRel("entrezGene"));
+				rnaSeqGeneExpression.add(linkTo(methodOn(CellLineController.class)
+						.findCellLineById(rnaSeqGeneExpression.getCellLineId(), null))
+						.withRel("cellLine"));
+			}
+			rnaSeqGeneExpressionList.add(rnaSeqGeneExpression);
 		}
 
-		Resources<Resource<RnaSeqGeneExpression>> resources = new Resources<>(resourceCollection);
-		resources.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
-				.findAllRnaSeqGeneExpression())
-				.withSelfRel());
+		Resources<RnaSeqGeneExpression> resources = new Resources<>(rnaSeqGeneExpressionList);
+		if (showLinks){
+			resources.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
+					.findAllRnaSeqGeneExpression(limit, offset, fields))
+					.withSelfRel());
+		}
 
 		return new ResponseEntity<>(resources, HttpStatus.OK);
 		
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET, params = {"entrezGeneId"})
-	public HttpEntity<Resources<Resource<RnaSeqGeneExpression>>> findRnaSeqGeneExpressionByGene(@RequestParam("entrezGeneId") Integer entrezGeneId){
+	public HttpEntity<Resources<RnaSeqGeneExpression>> findRnaSeqGeneExpressionByGene(
+			@RequestParam("entrezGeneId") Integer entrezGeneId,
+			@RequestParam(value = "limit", required = false) Integer limit,
+			@RequestParam(value = "offset", required = false) Integer offset,
+			@RequestParam(value = "fields", required = false) String fields){
 
-		Collection<Resource<RnaSeqGeneExpression>> resourceCollection = new ArrayList<>();
+		Set<String> fieldSet = new HashSet<>();
+		if (fields != null && !fields.equals("")){
+			for (String field: fields.split(",")){
+				fieldSet.add(field);
+			}
+		}
+		boolean showLinks = Boolean.valueOf(fields == null || fieldSet.contains("links"));
 
-		for (RnaSeqGeneExpression rnaSeqGeneExpression: rnaSeqGeneExpressionService.findRnaSeqGeneExpressionByGene(
-				entrezGeneId)){
-			resourceCollection.add(rnaSeqGeneExpressionResourceAssembler.toResource(rnaSeqGeneExpression));
+		List<RnaSeqGeneExpression> rnaSeqGeneExpressionList = new ArrayList<>();
+
+		for (RnaSeqGeneExpression rnaSeqGeneExpression: rnaSeqGeneExpressionService.findRnaSeqGeneExpressionByGene(entrezGeneId, limit, offset)){
+			rnaSeqGeneExpression.setFieldSet(fieldSet);
+			if (showLinks) {
+				rnaSeqGeneExpression.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
+						.findRnaSeqGeneExpressionById(rnaSeqGeneExpression.getRnaSeqGeneExpressionId(), fields))
+						.withSelfRel());
+				rnaSeqGeneExpression.add(linkTo(methodOn(EntrezGeneController.class)
+						.findEntrezGeneById(rnaSeqGeneExpression.getEntrezGeneId(), null))
+						.withRel("entrezGene"));
+				rnaSeqGeneExpression.add(linkTo(methodOn(CellLineController.class)
+						.findCellLineById(rnaSeqGeneExpression.getCellLineId(), null))
+						.withRel("cellLine"));
+			}
+			rnaSeqGeneExpressionList.add(rnaSeqGeneExpression);
 		}
 
-		Resources<Resource<RnaSeqGeneExpression>> resources = new Resources<>(resourceCollection);
-		resources.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
-				.findAllRnaSeqGeneExpression())
-				.withSelfRel());
+		Resources<RnaSeqGeneExpression> resources = new Resources<>(rnaSeqGeneExpressionList);
+		if (showLinks){
+			resources.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
+					.findAllRnaSeqGeneExpression(limit, offset, fields))
+					.withSelfRel());
+		}
 
 		return new ResponseEntity<>(resources, HttpStatus.OK);
-		
+
 	}
 	
 	//// Relationships
 	
 	@RequestMapping(value = "/{id}/celllines/{cellLineId}", method = RequestMethod.GET)
-	public HttpEntity<Resource<CellLine>> findRnaSeqGeneExpressionCellLine(
+	public HttpEntity<CellLine> findRnaSeqGeneExpressionCellLine(
 			@PathVariable("id") Integer rnaSeqGeneExpressionId, 
-			@PathVariable("cellLineId") Integer cellLineId){
+			@PathVariable("cellLineId") Integer cellLineId,
+			@RequestParam(value = "fields", required = false) String fields){
+
+		Set<String> fieldSet = new HashSet<>();
+		if (fields != null && !fields.equals("")){
+			for (String field: fields.split(",")){
+				fieldSet.add(field);
+			}
+		}
+		boolean showLinks = Boolean.valueOf(fields == null || fieldSet.contains("links"));
 		
 		RnaSeqGeneExpression rnaSeqGeneExpression 
 				= rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId);
@@ -165,18 +264,25 @@ public class RnaSeqGeneExpressionController {
 					"No CellLine record with ID: " + cellLineId + " is associated with RnaSeqGeneExpression record: " + rnaSeqGeneExpressionId, 
 					"");
 		}
+
+		cellLine.setFieldSet(fieldSet);
+		if (showLinks){
+			cellLine.add(linkTo(methodOn(CellLineController.class)
+					.findCellLineById(cellLine.getCellLineId(),fields))
+					.withSelfRel());
+			cellLine.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
+					.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId, null))
+					.withRel("rnaSeqGeneExpression"));
+		}
 		
-		Resource<CellLine> resource = cellLineResourceAssembler.toResource(cellLine);
-		resource.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
-				.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId))
-				.withRel("rnaSeqGeneExpression"));
-		
-		return new ResponseEntity<>(resource, HttpStatus.OK);
+		return new ResponseEntity<>(cellLine, HttpStatus.OK);
 		
 	}
 	
 	@RequestMapping(value = "/{id}/celllines", method = RequestMethod.GET)
-	public HttpEntity<Resource<CellLine>> findRNaSeqGeneExpressionCellLines(@PathVariable("id") Integer id){
+	public HttpEntity<CellLine> findRNaSeqGeneExpressionCellLines(
+			@PathVariable("id") Integer id,
+			@RequestParam(value = "fields", required = false) String fields){
 		
 		RnaSeqGeneExpression rnaSeqGeneExpression = rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(id);
 		
@@ -187,14 +293,23 @@ public class RnaSeqGeneExpressionController {
 					"");
 		}
 		
-		return findRnaSeqGeneExpressionCellLine(id, rnaSeqGeneExpression.getCellLineId());
+		return findRnaSeqGeneExpressionCellLine(id, rnaSeqGeneExpression.getCellLineId(), fields);
 		
 	}
 	
 	@RequestMapping(value = "/{id}/genes/{entrezGeneId}", method = RequestMethod.GET)
-	public HttpEntity<Resource<EntrezGene>> findRnaSeqGeneExpressionEntrezGene(
+	public HttpEntity<EntrezGene> findRnaSeqGeneExpressionEntrezGene(
 			@PathVariable("id") Integer rnaSeqGeneExpressionId, 
-			@PathVariable("entrezGeneId") Integer entrezGeneId){
+			@PathVariable("entrezGeneId") Integer entrezGeneId,
+			@RequestParam(value = "fields", required = false) String fields){
+
+		Set<String> fieldSet = new HashSet<>();
+		if (fields != null && !fields.equals("")){
+			for (String field: fields.split(",")){
+				fieldSet.add(field);
+			}
+		}
+		boolean showLinks = Boolean.valueOf(fields == null || fieldSet.contains("links"));
 		
 		RnaSeqGeneExpression rnaSeqGeneExpression 
 				= rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId);
@@ -215,17 +330,25 @@ public class RnaSeqGeneExpressionController {
 					"");
 		}
 		
-		Resource<EntrezGene> resource = entrezGeneResourceAssembler.toResource(entrezGene);
-		resource.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
-				.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId))
-				.withRel("rnaSeqGeneExpression"));
+		entrezGene.setFieldSet(fieldSet);
+		if (showLinks){
+			entrezGene.add(linkTo(methodOn(EntrezGeneController.class)
+					.findEntrezGeneById(entrezGene.getEntrezGeneId(), fields))
+					.withSelfRel());
+			entrezGene.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
+					.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId, null))
+					.withRel("rnaSeqGeneExpression"));
+		}
 		
-		return new ResponseEntity<>(resource, HttpStatus.OK);
+		
+		return new ResponseEntity<>(entrezGene, HttpStatus.OK);
 		
 	}
 	
 	@RequestMapping(value = "/{id}/genes", method = RequestMethod.GET)
-	public HttpEntity<Resource<EntrezGene>> findRnaSeqGeneExpressionEntrezGenes(@PathVariable("id") Integer id){
+	public HttpEntity<EntrezGene> findRnaSeqGeneExpressionEntrezGenes(
+			@PathVariable("id") Integer id,
+			@RequestParam(value = "fields", required = false) String fields){
 		
 		RnaSeqGeneExpression rnaSeqGeneExpression = rnaSeqGeneExpressionService.findRnaSeqGeneExpressionById(id);
 		
@@ -236,24 +359,9 @@ public class RnaSeqGeneExpressionController {
 					"");
 		}
 		
-		return findRnaSeqGeneExpressionEntrezGene(id, rnaSeqGeneExpression.getEntrezGeneId());
+		return findRnaSeqGeneExpressionEntrezGene(id, rnaSeqGeneExpression.getEntrezGeneId(), fields);
 		
 	}
 
-	
-	
-	
-	// Add rna seq gene expression
-	/*
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<RnaSeqGeneExpression> addRnaSeqGeneExpression(@RequestBody RnaSeqGeneExpression rnaSeqGeneExpression){
-		Integer rowCount = rnaSeqGeneExpressionService.addRnaSeqGeneExpression(rnaSeqGeneExpression);
-		if (rowCount != null && rowCount > 0){
-			return new ResponseEntity<RnaSeqGeneExpression>(rnaSeqGeneExpression, HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<RnaSeqGeneExpression>(rnaSeqGeneExpression, HttpStatus.BAD_REQUEST);
-		}
-	}
-	*/
 	
 }
