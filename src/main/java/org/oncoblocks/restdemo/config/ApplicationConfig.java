@@ -1,5 +1,6 @@
 package org.oncoblocks.restdemo.config;
 
+import org.oncoblocks.restdemo.util.FilteringJackson2HttpMessageConverter;
 import org.oncoblocks.restdemo.util.TextMessageConverter;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +11,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.web.servlet.config.annotation.*;
@@ -83,7 +83,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
 		converters.add(xmlConverter);
 
 		// JSON
-		MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+		FilteringJackson2HttpMessageConverter jsonConverter = new FilteringJackson2HttpMessageConverter();
 		jsonConverter.setPrettyPrint(true);
 		converters.add(jsonConverter);
 		

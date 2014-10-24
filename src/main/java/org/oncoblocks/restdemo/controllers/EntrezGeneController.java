@@ -4,6 +4,7 @@ import org.oncoblocks.restdemo.exceptions.MalformedEntityException;
 import org.oncoblocks.restdemo.exceptions.RequestFailureException;
 import org.oncoblocks.restdemo.exceptions.ResourceNotFoundException;
 import org.oncoblocks.restdemo.models.EntrezGene;
+import org.oncoblocks.restdemo.models.RestEnvelope;
 import org.oncoblocks.restdemo.services.EntrezGeneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -15,9 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -36,58 +35,39 @@ public class EntrezGeneController {
 	
 	// Find all
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public HttpEntity<Resources<EntrezGene>> findAllEntrezGenes(
+	public HttpEntity<RestEnvelope<Resources<EntrezGene>>> findAllEntrezGenes(
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "offset", required = false) Integer offset,
 			@RequestParam(value = "fields", required = false) String fields
 	){
 
-		Set<String> fieldSet = new HashSet<>();
-		if (fields != null && !fields.equals("")){
-			for (String field: fields.split(",")){
-				fieldSet.add(field);
-			}
-		}
-		boolean showLinks = Boolean.valueOf(fields == null || fieldSet.contains("links"));
-		
 		List<EntrezGene> entrezGeneList = new ArrayList<>();
-		
 		for (EntrezGene entrezGene: entrezGeneService.findAllEntrezGenes(limit, offset)){
-			entrezGene.setFieldSet(fieldSet);
-			if (showLinks){
-				entrezGene.add(linkTo(methodOn(EntrezGeneController.class)
-						.findEntrezGeneById(entrezGene.getEntrezGeneId(), fields))
-						.withSelfRel());
-			}
+			entrezGene.add(linkTo(methodOn(EntrezGeneController.class)
+					.findEntrezGeneById(entrezGene.getEntrezGeneId(), fields))
+					.withSelfRel());
 			entrezGeneList.add(entrezGene);
 		}
 		
 		Resources<EntrezGene> resources = new Resources<>(entrezGeneList);
-		if (showLinks){
-			resources.add(linkTo(methodOn(EntrezGeneController.class)
-					.findAllEntrezGenes(limit, offset, fields))
-					.withSelfRel());
-		}
+		resources.add(linkTo(methodOn(EntrezGeneController.class)
+				.findAllEntrezGenes(limit, offset, fields))
+				.withSelfRel());
+
+		RestEnvelope<Resources<EntrezGene>> envelope = new RestEnvelope<>(resources);
+		envelope.setFields(fields);
 		
-		return new ResponseEntity<>(resources, HttpStatus.OK);
+		return new ResponseEntity<>(envelope, HttpStatus.OK);
 		
 	}
 	
 	// Find by ID
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public HttpEntity<EntrezGene> findEntrezGeneById(
+	public HttpEntity<RestEnvelope<EntrezGene>> findEntrezGeneById(
 			@PathVariable("id") Integer id,
 			@RequestParam(value = "fields", required = false) String fields
 	){
 
-		Set<String> fieldSet = new HashSet<>();
-		if (fields != null && !fields.equals("")){
-			for (String field: fields.split(",")){
-				fieldSet.add(field);
-			}
-		}
-		boolean showLinks = Boolean.valueOf(fields == null || fieldSet.contains("links"));
-		
 		EntrezGene entrezGene = entrezGeneService.findEntrezGeneById(id);
 		
 		if (entrezGene == null){
@@ -98,54 +78,43 @@ public class EntrezGeneController {
 					"");
 		}
 
-		entrezGene.setFieldSet(fieldSet);
-		if (showLinks){
-			entrezGene.add(linkTo(methodOn(EntrezGeneController.class)
-					.findEntrezGeneById(entrezGene.getEntrezGeneId(), fields))
-					.withSelfRel());
-		}
+		entrezGene.add(linkTo(methodOn(EntrezGeneController.class)
+				.findEntrezGeneById(entrezGene.getEntrezGeneId(), fields))
+				.withSelfRel());
 		
-		return new ResponseEntity<>(entrezGene, HttpStatus.OK);
+		RestEnvelope<EntrezGene> envelope = new RestEnvelope<>(entrezGene);
+		envelope.setFields(fields);
+		
+		return new ResponseEntity<>(envelope, HttpStatus.OK);
 		
 	}
 	
 	// Find by attribute
 	@RequestMapping(value = "", method = RequestMethod.GET, params = {"geneSymbol"})
-	public HttpEntity<Resources<EntrezGene>> findEntrezGenesByGeneSymbol(
+	public HttpEntity<RestEnvelope<Resources<EntrezGene>>> findEntrezGenesByGeneSymbol(
 			@RequestParam("geneSymbol") String geneSymbol,
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "offset", required = false) Integer offset,
 			@RequestParam(value = "fields", required = false) String fields
 	){
 
-		Set<String> fieldSet = new HashSet<>();
-		if (fields != null && !fields.equals("")){
-			for (String field: fields.split(",")){
-				fieldSet.add(field);
-			}
-		}
-		boolean showLinks = Boolean.valueOf(fields == null || fieldSet.contains("links"));
-		
 		List<EntrezGene> entrezGeneList = new ArrayList<>();
-		
 		for (EntrezGene entrezGene: entrezGeneService.findEntrezGenesByGeneSymbol(geneSymbol, limit, offset)){
-			entrezGene.setFieldSet(fieldSet);
-			if (showLinks){
-				entrezGene.add(linkTo(methodOn(EntrezGeneController.class)
-						.findEntrezGeneById(entrezGene.getEntrezGeneId(), fields))
-						.withSelfRel());
-			}
+			entrezGene.add(linkTo(methodOn(EntrezGeneController.class)
+					.findEntrezGeneById(entrezGene.getEntrezGeneId(), fields))
+					.withSelfRel());
 			entrezGeneList.add(entrezGene);
 		}
 
 		Resources<EntrezGene> resources = new Resources<>(entrezGeneList);
-		if (showLinks){
-			resources.add(linkTo(methodOn(EntrezGeneController.class)
-					.findAllEntrezGenes(limit, offset, fields))
-					.withSelfRel());
-		}
+		resources.add(linkTo(methodOn(EntrezGeneController.class)
+				.findAllEntrezGenes(limit, offset, fields))
+				.withSelfRel());
 
-		return new ResponseEntity<>(resources, HttpStatus.OK);
+		RestEnvelope<Resources<EntrezGene>> envelope = new RestEnvelope<>(resources);
+		envelope.setFields(fields);
+
+		return new ResponseEntity<>(envelope, HttpStatus.OK);
 		
 	}
 	

@@ -4,6 +4,7 @@ import org.oncoblocks.restdemo.exceptions.MalformedEntityException;
 import org.oncoblocks.restdemo.exceptions.RequestFailureException;
 import org.oncoblocks.restdemo.exceptions.ResourceNotFoundException;
 import org.oncoblocks.restdemo.models.CellLine;
+import org.oncoblocks.restdemo.models.RestEnvelope;
 import org.oncoblocks.restdemo.services.CellLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -15,9 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -44,39 +43,29 @@ public class CellLineController {
 	 * @return HttpResponse entity with embedded HATEOAS-enabled CellLine objects.
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public HttpEntity<Resources<CellLine>> findAllCellLines(
+	public HttpEntity<RestEnvelope<Resources<CellLine>>> findAllCellLines(
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "offset", required = false) Integer offset,
 			@RequestParam(value = "fields", required = false) String fields
 	){
 
-		Set<String> fieldSet = new HashSet<>();
-		if (fields != null && !fields.equals("")){
-			for (String field: fields.split(",")){
-				fieldSet.add(field);
-			}
-		}
-		boolean showLinks = Boolean.valueOf(fields == null || fieldSet.contains("links"));
-		
 		List<CellLine> cellLineList = new ArrayList<>();
 		for (CellLine cellLine: cellLineService.findAllCellLines(limit, offset)){
-			cellLine.setFieldSet(fieldSet);
-			if (showLinks){
-				cellLine.add(linkTo(methodOn(CellLineController.class)
-						.findCellLineById(cellLine.getCellLineId(),fields))
-						.withSelfRel());
-			}
+			cellLine.add(linkTo(methodOn(CellLineController.class)
+					.findCellLineById(cellLine.getCellLineId(),fields))
+					.withSelfRel());
 			cellLineList.add(cellLine);
 		}
 		
 		Resources<CellLine> resources = new Resources<>(cellLineList);
-		if (showLinks) {
-			resources.add(linkTo(methodOn(CellLineController.class)
-					.findAllCellLines(limit, offset, fields))
-					.withSelfRel());
-		}
+		resources.add(linkTo(methodOn(CellLineController.class)
+				.findAllCellLines(limit, offset, fields))
+				.withSelfRel());
+
+		RestEnvelope<Resources<CellLine>> responseEnvelope = new RestEnvelope<>(resources);
+		responseEnvelope.setFields(fields);
 		
-		return new ResponseEntity<>(resources, HttpStatus.OK);
+		return new ResponseEntity<>(responseEnvelope, HttpStatus.OK);
 		
 	}
 
@@ -88,33 +77,25 @@ public class CellLineController {
 	 * @return HttpResponse entity with a single embedded HATEOAS-enabled CellLine object.
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public HttpEntity<CellLine> findCellLineById(
+	public HttpEntity<RestEnvelope<CellLine>> findCellLineById(
 			@PathVariable("id") Integer id, 
 			@RequestParam(value = "fields", required = false) String fields
 	){
 
-		Set<String> fieldSet = new HashSet<>();
-		if (fields != null && !fields.equals("")){
-			for (String field: fields.split(",")){
-				fieldSet.add(field);
-			}
-		}
-		boolean showLinks = Boolean.valueOf(fields == null || fieldSet.contains("links"));
-		
 		CellLine cellLine = cellLineService.findCellLineById(id);
 		
 		if (cellLine == null){
 			throw new ResourceNotFoundException(40401, "The requested resource is not available.", "No CellLine record found with ID: " + id, "");
 		}
 
-		cellLine.setFieldSet(fieldSet);
-		if (showLinks){
-			cellLine.add(linkTo(methodOn(CellLineController.class)
-					.findCellLineById(cellLine.getCellLineId(),fields))
-					.withSelfRel());
-		}
+		cellLine.add(linkTo(methodOn(CellLineController.class)
+				.findCellLineById(cellLine.getCellLineId(),fields))
+				.withSelfRel());
+
+		RestEnvelope<CellLine> responseEnvelope = new RestEnvelope<>(cellLine);
+		responseEnvelope.setFields(fields);
 		
-		return new ResponseEntity<>(cellLine, HttpStatus.OK);
+		return new ResponseEntity<>(responseEnvelope, HttpStatus.OK);
 		
 	}
 
@@ -127,39 +108,30 @@ public class CellLineController {
 	 * @return HttpResponse entity with embedded HATEOAS-enabled CellLine objects.
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, params = {"ccleName"})
-	public HttpEntity<Resources<CellLine>> findCellLinesByCcleName(
+	public HttpEntity<RestEnvelope<Resources<CellLine>>> findCellLinesByCcleName(
 			@RequestParam("ccleName") String ccleName,
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "offset", required = false) Integer offset,
 			@RequestParam(value = "fields", required = false) String fields
 	){
 
-		Set<String> fieldSet = new HashSet<>();
-		if (fields != null && !fields.equals("")){
-			for (String field: fields.split(",")){
-				fieldSet.add(field);
-			}
-		}
-		boolean showLinks = Boolean.valueOf(fields == null || fieldSet.contains("links"));
-
 		List<CellLine> cellLineList = new ArrayList<>();
 		for (CellLine cellLine: cellLineService.findCellLinesByCcleName(ccleName, limit, offset)){
-			cellLine.setFieldSet(fieldSet);
-			if (showLinks){
-				cellLine.add(linkTo(methodOn(CellLineController.class)
-						.findCellLineById(cellLine.getCellLineId(),fields))
-						.withSelfRel());
-			}
+			cellLine.add(linkTo(methodOn(CellLineController.class)
+					.findCellLineById(cellLine.getCellLineId(),fields))
+					.withSelfRel());
+			cellLineList.add(cellLine);
 		}
 
 		Resources<CellLine> resources = new Resources<>(cellLineList);
-		if (showLinks) {
-			resources.add(linkTo(methodOn(CellLineController.class)
-					.findAllCellLines(limit, offset, fields))
-					.withSelfRel());
-		}
+		resources.add(linkTo(methodOn(CellLineController.class)
+				.findAllCellLines(limit, offset, fields))
+				.withSelfRel());
 
-		return new ResponseEntity<>(resources, HttpStatus.OK);
+		RestEnvelope<Resources<CellLine>> responseEnvelope = new RestEnvelope<>(resources);
+		responseEnvelope.setFields(fields);
+
+		return new ResponseEntity<>(responseEnvelope, HttpStatus.OK);
 		
 	}
 
