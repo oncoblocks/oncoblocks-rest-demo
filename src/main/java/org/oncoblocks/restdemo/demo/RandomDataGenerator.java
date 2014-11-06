@@ -38,14 +38,14 @@ public class RandomDataGenerator {
 
 		entrezGene.setGeneType("protein-coding");
 
-		Map<String,Object> refMap = new HashMap<>();
+		Map<String,Object> refMap = new HashMap<String, Object>();
 		refMap.put("HGNC", String.valueOf(random.nextInt(10000)));
 		refMap.put("MIM", String.valueOf(random.nextInt(1000000)));
 		refMap.put("Ensembl", "ENSG" + String.valueOf(random.nextInt(1000000000)));
 		refMap.put("Vega", "OTTHUMG" + String.valueOf(random.nextInt(1000000000)));
 		entrezGene.setDatabaseCrossReferences(refMap);
 
-		Set<String> aliases = new HashSet<>();
+		Set<String> aliases = new HashSet<String>();
 		for (int i = 0; i < random.nextInt(4)+2; i++){
 			aliases.add(RandomStringUtils.random(random.nextInt(5)+4, true, true).toUpperCase());
 		}

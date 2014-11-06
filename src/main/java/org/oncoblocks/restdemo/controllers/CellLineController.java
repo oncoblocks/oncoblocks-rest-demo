@@ -49,7 +49,7 @@ public class CellLineController {
 			@RequestParam(value = "fields", required = false) String fields
 	){
 
-		List<CellLine> cellLineList = new ArrayList<>();
+		List<CellLine> cellLineList = new ArrayList<CellLine>();
 		for (CellLine cellLine: cellLineService.findAllCellLines(limit, offset)){
 			cellLine.add(linkTo(methodOn(CellLineController.class)
 					.findCellLineById(cellLine.getCellLineId(),fields))
@@ -57,15 +57,15 @@ public class CellLineController {
 			cellLineList.add(cellLine);
 		}
 		
-		Resources<CellLine> resources = new Resources<>(cellLineList);
+		Resources<CellLine> resources = new Resources<CellLine>(cellLineList);
 		resources.add(linkTo(methodOn(CellLineController.class)
 				.findAllCellLines(limit, offset, fields))
 				.withSelfRel());
 
-		RestEnvelope<Resources<CellLine>> responseEnvelope = new RestEnvelope<>(resources);
+		RestEnvelope<Resources<CellLine>> responseEnvelope = new RestEnvelope<Resources<CellLine>>(resources);
 		responseEnvelope.setFields(fields);
 		
-		return new ResponseEntity<>(responseEnvelope, HttpStatus.OK);
+		return new ResponseEntity<RestEnvelope<Resources<CellLine>>>(responseEnvelope, HttpStatus.OK);
 		
 	}
 
@@ -92,10 +92,10 @@ public class CellLineController {
 				.findCellLineById(cellLine.getCellLineId(),fields))
 				.withSelfRel());
 
-		RestEnvelope<CellLine> responseEnvelope = new RestEnvelope<>(cellLine);
+		RestEnvelope<CellLine> responseEnvelope = new RestEnvelope<CellLine>(cellLine);
 		responseEnvelope.setFields(fields);
 		
-		return new ResponseEntity<>(responseEnvelope, HttpStatus.OK);
+		return new ResponseEntity<RestEnvelope<CellLine>>(responseEnvelope, HttpStatus.OK);
 		
 	}
 
@@ -115,7 +115,7 @@ public class CellLineController {
 			@RequestParam(value = "fields", required = false) String fields
 	){
 
-		List<CellLine> cellLineList = new ArrayList<>();
+		List<CellLine> cellLineList = new ArrayList<CellLine>();
 		for (CellLine cellLine: cellLineService.findCellLinesByCcleName(ccleName, limit, offset)){
 			cellLine.add(linkTo(methodOn(CellLineController.class)
 					.findCellLineById(cellLine.getCellLineId(),fields))
@@ -123,15 +123,15 @@ public class CellLineController {
 			cellLineList.add(cellLine);
 		}
 
-		Resources<CellLine> resources = new Resources<>(cellLineList);
+		Resources<CellLine> resources = new Resources<CellLine>(cellLineList);
 		resources.add(linkTo(methodOn(CellLineController.class)
 				.findAllCellLines(limit, offset, fields))
 				.withSelfRel());
 
-		RestEnvelope<Resources<CellLine>> responseEnvelope = new RestEnvelope<>(resources);
+		RestEnvelope<Resources<CellLine>> responseEnvelope = new RestEnvelope<Resources<CellLine>>(resources);
 		responseEnvelope.setFields(fields);
 
-		return new ResponseEntity<>(responseEnvelope, HttpStatus.OK);
+		return new ResponseEntity<RestEnvelope<Resources<CellLine>>>(responseEnvelope, HttpStatus.OK);
 		
 	}
 
@@ -152,7 +152,7 @@ public class CellLineController {
 			cellLine.add(linkTo(methodOn(CellLineController.class)
 					.findCellLineById(cellLine.getCellLineId(),null))
 					.withSelfRel());
-			return new ResponseEntity<>(cellLine, HttpStatus.CREATED);
+			return new ResponseEntity<CellLine>(cellLine, HttpStatus.CREATED);
 			
 		} else {
 			
@@ -193,7 +193,7 @@ public class CellLineController {
 			cellLine.add(linkTo(methodOn(CellLineController.class)
 					.findCellLineById(cellLine.getCellLineId(),null))
 					.withSelfRel());
-			return new ResponseEntity<>(cellLine, HttpStatus.CREATED);
+			return new ResponseEntity<CellLine>(cellLine, HttpStatus.CREATED);
 			
 		} else {
 			
@@ -230,7 +230,7 @@ public class CellLineController {
 			
 		} else {
 			
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<CellLine>(HttpStatus.OK);
 			
 		}
 		

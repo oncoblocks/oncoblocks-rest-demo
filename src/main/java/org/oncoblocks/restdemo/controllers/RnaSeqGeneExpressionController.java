@@ -76,10 +76,10 @@ public class RnaSeqGeneExpressionController {
 				.findCellLineById(rnaSeqGeneExpression.getCellLineId(), null))
 				.withRel("cellLine"));
 		
-		RestEnvelope<RnaSeqGeneExpression> envelope = new RestEnvelope<>(rnaSeqGeneExpression);
+		RestEnvelope<RnaSeqGeneExpression> envelope = new RestEnvelope<RnaSeqGeneExpression>(rnaSeqGeneExpression);
 		envelope.setFields(fields);
 		
-		return new ResponseEntity<>(envelope, HttpStatus.OK);
+		return new ResponseEntity<RestEnvelope<RnaSeqGeneExpression>>(envelope, HttpStatus.OK);
 		
 	}
 	
@@ -95,7 +95,7 @@ public class RnaSeqGeneExpressionController {
 			@RequestParam(value = "offset", required = false) Integer offset,
 			@RequestParam(value = "fields", required = false) String fields){
 
-		List<RnaSeqGeneExpression> rnaSeqGeneExpressionList = new ArrayList<>();
+		List<RnaSeqGeneExpression> rnaSeqGeneExpressionList = new ArrayList<RnaSeqGeneExpression>();
 		
 		for (RnaSeqGeneExpression rnaSeqGeneExpression: rnaSeqGeneExpressionService.findAllRnaSeqGeneExpression(limit, offset)){
 			rnaSeqGeneExpression.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
@@ -110,15 +110,15 @@ public class RnaSeqGeneExpressionController {
 			rnaSeqGeneExpressionList.add(rnaSeqGeneExpression);
 		}
 		
-		Resources<RnaSeqGeneExpression> resources = new Resources<>(rnaSeqGeneExpressionList);
+		Resources<RnaSeqGeneExpression> resources = new Resources<RnaSeqGeneExpression>(rnaSeqGeneExpressionList);
 		resources.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
 				.findAllRnaSeqGeneExpression(limit, offset, fields))
 				.withSelfRel());
 		
-		RestEnvelope<Resources<RnaSeqGeneExpression>> envelope = new RestEnvelope<>(resources);
+		RestEnvelope<Resources<RnaSeqGeneExpression>> envelope = new RestEnvelope<Resources<RnaSeqGeneExpression>>(resources);
 		envelope.setFields(fields);
 		
-		return new ResponseEntity<>(envelope, HttpStatus.OK);
+		return new ResponseEntity<RestEnvelope<Resources<RnaSeqGeneExpression>>>(envelope, HttpStatus.OK);
 		
 	}
 
@@ -130,7 +130,7 @@ public class RnaSeqGeneExpressionController {
 			@RequestParam(value = "offset", required = false) Integer offset,
 			@RequestParam(value = "fields", required = false) String fields){
 
-		List<RnaSeqGeneExpression> rnaSeqGeneExpressionList = new ArrayList<>();
+		List<RnaSeqGeneExpression> rnaSeqGeneExpressionList = new ArrayList<RnaSeqGeneExpression>();
 
 		for (RnaSeqGeneExpression rnaSeqGeneExpression: rnaSeqGeneExpressionService.findRnaSeqGeneExpressionByCellLine(
 				cellLineId, limit, offset)){
@@ -146,15 +146,15 @@ public class RnaSeqGeneExpressionController {
 			rnaSeqGeneExpressionList.add(rnaSeqGeneExpression);
 		}
 
-		Resources<RnaSeqGeneExpression> resources = new Resources<>(rnaSeqGeneExpressionList);
+		Resources<RnaSeqGeneExpression> resources = new Resources<RnaSeqGeneExpression>(rnaSeqGeneExpressionList);
 		resources.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
 				.findAllRnaSeqGeneExpression(limit, offset, fields))
 				.withSelfRel());
 
-		RestEnvelope<Resources<RnaSeqGeneExpression>> envelope = new RestEnvelope<>(resources);
+		RestEnvelope<Resources<RnaSeqGeneExpression>> envelope = new RestEnvelope<Resources<RnaSeqGeneExpression>>(resources);
 		envelope.setFields(fields);
 
-		return new ResponseEntity<>(envelope, HttpStatus.OK);
+		return new ResponseEntity<RestEnvelope<Resources<RnaSeqGeneExpression>>>(envelope, HttpStatus.OK);
 		
 	}
 
@@ -165,7 +165,7 @@ public class RnaSeqGeneExpressionController {
 			@RequestParam(value = "offset", required = false) Integer offset,
 			@RequestParam(value = "fields", required = false) String fields){
 
-		List<RnaSeqGeneExpression> rnaSeqGeneExpressionList = new ArrayList<>();
+		List<RnaSeqGeneExpression> rnaSeqGeneExpressionList = new ArrayList<RnaSeqGeneExpression>();
 
 		for (RnaSeqGeneExpression rnaSeqGeneExpression: rnaSeqGeneExpressionService.findRnaSeqGeneExpressionByGene(
 				entrezGeneId, limit, offset)){
@@ -181,15 +181,15 @@ public class RnaSeqGeneExpressionController {
 			rnaSeqGeneExpressionList.add(rnaSeqGeneExpression);
 		}
 
-		Resources<RnaSeqGeneExpression> resources = new Resources<>(rnaSeqGeneExpressionList);
+		Resources<RnaSeqGeneExpression> resources = new Resources<RnaSeqGeneExpression>(rnaSeqGeneExpressionList);
 		resources.add(linkTo(methodOn(RnaSeqGeneExpressionController.class)
 				.findAllRnaSeqGeneExpression(limit, offset, fields))
 				.withSelfRel());
 
-		RestEnvelope<Resources<RnaSeqGeneExpression>> envelope = new RestEnvelope<>(resources);
+		RestEnvelope<Resources<RnaSeqGeneExpression>> envelope = new RestEnvelope<Resources<RnaSeqGeneExpression>>(resources);
 		envelope.setFields(fields);
 
-		return new ResponseEntity<>(envelope, HttpStatus.OK);
+		return new ResponseEntity<RestEnvelope<Resources<RnaSeqGeneExpression>>>(envelope, HttpStatus.OK);
 		
 	}
 	
@@ -227,10 +227,10 @@ public class RnaSeqGeneExpressionController {
 				.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId, null))
 				.withRel("rnaSeqGeneExpression"));
 		
-		RestEnvelope<CellLine> envelope = new RestEnvelope<>(cellLine);
+		RestEnvelope<CellLine> envelope = new RestEnvelope<CellLine>(cellLine);
 		envelope.setFields(fields);
 		
-		return new ResponseEntity<>(envelope, HttpStatus.OK);
+		return new ResponseEntity<RestEnvelope<CellLine>>(envelope, HttpStatus.OK);
 		
 	}
 	
@@ -284,10 +284,10 @@ public class RnaSeqGeneExpressionController {
 				.findRnaSeqGeneExpressionById(rnaSeqGeneExpressionId, null))
 				.withRel("rnaSeqGeneExpression"));
 		
-		RestEnvelope<EntrezGene> envelope = new RestEnvelope<>(entrezGene);
+		RestEnvelope<EntrezGene> envelope = new RestEnvelope<EntrezGene>(entrezGene);
 		envelope.setFields(fields);
 		
-		return new ResponseEntity<>(envelope, HttpStatus.OK);
+		return new ResponseEntity<RestEnvelope<EntrezGene>>(envelope, HttpStatus.OK);
 		
 	}
 	

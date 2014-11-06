@@ -168,7 +168,7 @@ public class EntrezGeneDao {
 			gene.setIsKinase(resultSet.getString("is_kinase"));
 			gene.setIsCgcGene(resultSet.getString("is_cgc_gene"));
 
-			Map<String, Object> crossReferenceMap = new HashMap<>();
+			Map<String, Object> crossReferenceMap = new HashMap<String, Object>();
 			for (String ref: resultSet.getString("db_xrefs").split("\\|")){
 				String[] bits = ref.split(":");
 				if (bits.length == 2) {
@@ -177,7 +177,7 @@ public class EntrezGeneDao {
 			}
 			gene.setDatabaseCrossReferences(crossReferenceMap);
 
-			Set<String> geneSymbolAliases = new HashSet<>();
+			Set<String> geneSymbolAliases = new HashSet<String>();
 			for (String alias: resultSet.getString("gene_symbol_aliases").split(",")){
 				if (alias.trim() != null && !alias.equals("")){
 					geneSymbolAliases.add(alias);

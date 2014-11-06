@@ -30,14 +30,7 @@ import java.util.List;
 @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
 @ComponentScan(basePackages = {"org.oncoblocks.restdemo"})
 public class ApplicationConfig extends WebMvcConfigurerAdapter {
-	
-	/*
-	@Override
-	public void addInterceptors(final InterceptorRegistry registry){
-		registry.addInterceptor(new FieldFilterInterceptor());
-	}
-	*/
-	
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry){
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
@@ -48,7 +41,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer){
 		configurer.enable();
 	}
-	
+
 	@Bean
 	public InternalResourceViewResolver getInternalResourceViewResolver(){
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -70,7 +63,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
 	public void configureMessageConverters(List<HttpMessageConverter< ?>> converters) {
 
 		// XML
-		List<MediaType> mediaType = new ArrayList<>();
+		List<MediaType> mediaType = new ArrayList<MediaType>();
 		mediaType.add(MediaType.APPLICATION_XML);
 
 		MarshallingHttpMessageConverter xmlConverter = new MarshallingHttpMessageConverter();
@@ -99,7 +92,6 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter {
 		converters.add(csvConverter);
 		
 	}
-
 
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer){

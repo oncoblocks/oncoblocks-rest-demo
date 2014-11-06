@@ -35,7 +35,7 @@ public class RestEnvelope<T> {
 	}
 
 	public void setFields(String fields) {
-		Set<String> fieldSet = new HashSet<>();
+		Set<String> fieldSet = new HashSet<String>();
 		if (fields != null) {
 			for (String field : fields.split(",")) {
 				fieldSet.add(field);

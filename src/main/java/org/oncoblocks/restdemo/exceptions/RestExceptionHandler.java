@@ -28,7 +28,7 @@ public class RestExceptionHandler {
 			ResourceNotFoundException ex,
 			WebRequest request){
 		RestError restError = ex.getRestError();
-		return new ResponseEntity<>(restError, restError.getStatus());
+		return new ResponseEntity<RestError>(restError, restError.getStatus());
 	}
 		
 }

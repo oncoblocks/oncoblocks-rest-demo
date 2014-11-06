@@ -41,7 +41,7 @@ public class EntrezGeneController {
 			@RequestParam(value = "fields", required = false) String fields
 	){
 
-		List<EntrezGene> entrezGeneList = new ArrayList<>();
+		List<EntrezGene> entrezGeneList = new ArrayList<EntrezGene>();
 		for (EntrezGene entrezGene: entrezGeneService.findAllEntrezGenes(limit, offset)){
 			entrezGene.add(linkTo(methodOn(EntrezGeneController.class)
 					.findEntrezGeneById(entrezGene.getEntrezGeneId(), fields))
@@ -49,15 +49,15 @@ public class EntrezGeneController {
 			entrezGeneList.add(entrezGene);
 		}
 		
-		Resources<EntrezGene> resources = new Resources<>(entrezGeneList);
+		Resources<EntrezGene> resources = new Resources<EntrezGene>(entrezGeneList);
 		resources.add(linkTo(methodOn(EntrezGeneController.class)
 				.findAllEntrezGenes(limit, offset, fields))
 				.withSelfRel());
 
-		RestEnvelope<Resources<EntrezGene>> envelope = new RestEnvelope<>(resources);
+		RestEnvelope<Resources<EntrezGene>> envelope = new RestEnvelope<Resources<EntrezGene>>(resources);
 		envelope.setFields(fields);
 		
-		return new ResponseEntity<>(envelope, HttpStatus.OK);
+		return new ResponseEntity<RestEnvelope<Resources<EntrezGene>>>(envelope, HttpStatus.OK);
 		
 	}
 	
@@ -82,10 +82,10 @@ public class EntrezGeneController {
 				.findEntrezGeneById(entrezGene.getEntrezGeneId(), fields))
 				.withSelfRel());
 		
-		RestEnvelope<EntrezGene> envelope = new RestEnvelope<>(entrezGene);
+		RestEnvelope<EntrezGene> envelope = new RestEnvelope<EntrezGene>(entrezGene);
 		envelope.setFields(fields);
 		
-		return new ResponseEntity<>(envelope, HttpStatus.OK);
+		return new ResponseEntity<RestEnvelope<EntrezGene>>(envelope, HttpStatus.OK);
 		
 	}
 	
@@ -98,7 +98,7 @@ public class EntrezGeneController {
 			@RequestParam(value = "fields", required = false) String fields
 	){
 
-		List<EntrezGene> entrezGeneList = new ArrayList<>();
+		List<EntrezGene> entrezGeneList = new ArrayList<EntrezGene>();
 		for (EntrezGene entrezGene: entrezGeneService.findEntrezGenesByGeneSymbol(geneSymbol, limit, offset)){
 			entrezGene.add(linkTo(methodOn(EntrezGeneController.class)
 					.findEntrezGeneById(entrezGene.getEntrezGeneId(), fields))
@@ -106,15 +106,15 @@ public class EntrezGeneController {
 			entrezGeneList.add(entrezGene);
 		}
 
-		Resources<EntrezGene> resources = new Resources<>(entrezGeneList);
+		Resources<EntrezGene> resources = new Resources<EntrezGene>(entrezGeneList);
 		resources.add(linkTo(methodOn(EntrezGeneController.class)
 				.findAllEntrezGenes(limit, offset, fields))
 				.withSelfRel());
 
-		RestEnvelope<Resources<EntrezGene>> envelope = new RestEnvelope<>(resources);
+		RestEnvelope<Resources<EntrezGene>> envelope = new RestEnvelope<Resources<EntrezGene>>(resources);
 		envelope.setFields(fields);
 
-		return new ResponseEntity<>(envelope, HttpStatus.OK);
+		return new ResponseEntity<RestEnvelope<Resources<EntrezGene>>>(envelope, HttpStatus.OK);
 		
 	}
 	
@@ -129,7 +129,7 @@ public class EntrezGeneController {
 			entrezGene.add(linkTo(methodOn(EntrezGeneController.class)
 					.findEntrezGeneById(entrezGene.getEntrezGeneId(), null))
 					.withSelfRel());
-			return new ResponseEntity<>(entrezGene, HttpStatus.CREATED);
+			return new ResponseEntity<EntrezGene>(entrezGene, HttpStatus.CREATED);
 			
 		} else {
 			
@@ -164,7 +164,7 @@ public class EntrezGeneController {
 			
 		} else if (rowCount > 0){
 			
-			return new ResponseEntity<>(entrezGene, HttpStatus.CREATED);
+			return new ResponseEntity<EntrezGene>(entrezGene, HttpStatus.CREATED);
 			
 		} else {
 			
@@ -191,7 +191,7 @@ public class EntrezGeneController {
 					"No EntrezGene record found with ID: " + id, 
 					"");
 		} else {
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<EntrezGene>(HttpStatus.OK);
 		}
 		
 	}

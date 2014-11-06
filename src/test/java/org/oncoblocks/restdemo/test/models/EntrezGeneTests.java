@@ -1,12 +1,14 @@
 package org.oncoblocks.restdemo.test.models;
 
+import org.junit.Test;
+import org.oncoblocks.restdemo.config.ApplicationConfig;
+import org.oncoblocks.restdemo.config.DataSourceConfig;
+import org.oncoblocks.restdemo.config.SwaggerConfig;
 import org.oncoblocks.restdemo.demo.PrettyPrintData;
 import org.oncoblocks.restdemo.demo.RandomDataGenerator;
 import org.oncoblocks.restdemo.models.EntrezGene;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.util.Assert;
 
 
@@ -14,8 +16,8 @@ import org.springframework.util.Assert;
  * Created by woemler on 9/23/14.
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test/test-application-context.xml"})
+@WebAppConfiguration
+@ContextConfiguration(classes = {ApplicationConfig.class, SwaggerConfig.class, DataSourceConfig.class})
 public class EntrezGeneTests {
 	
 	@Test
