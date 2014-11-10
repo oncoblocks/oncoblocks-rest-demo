@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.oncoblocks.restdemo.models.Mutation;
 import org.oncoblocks.restdemo.util.DummyDataGenerator;
+import org.oncoblocks.restdemo.models.Sample;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

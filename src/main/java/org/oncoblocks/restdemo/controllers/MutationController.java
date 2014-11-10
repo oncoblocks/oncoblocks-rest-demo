@@ -1,12 +1,7 @@
 package org.oncoblocks.restdemo.controllers;
 
-import org.oncoblocks.restdemo.exceptions.MalformedEntityException;
-import org.oncoblocks.restdemo.exceptions.RequestFailureException;
-import org.oncoblocks.restdemo.exceptions.ResourceNotFoundException;
-import org.oncoblocks.restdemo.models.CellLine;
 import org.oncoblocks.restdemo.models.Mutation;
 import org.oncoblocks.restdemo.models.RestEnvelope;
-import org.oncoblocks.restdemo.services.CellLineService;
 import org.oncoblocks.restdemo.services.MutationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -15,13 +10,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * Created by woemler on 10/2/14.
