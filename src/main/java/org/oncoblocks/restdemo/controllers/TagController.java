@@ -1,5 +1,7 @@
 package org.oncoblocks.restdemo.controllers;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 import org.oncoblocks.restdemo.exceptions.MalformedEntityException;
 import org.oncoblocks.restdemo.exceptions.RequestFailureException;
 import org.oncoblocks.restdemo.exceptions.ResourceNotFoundException;
@@ -28,6 +30,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Controller
 @ExposesResourceFor(Tag.class)
 @RequestMapping(value = "/api/v1/tags", produces = {"application/json", "application/xml", "text/plain", "text/csv"})
+@Api(value="Tags", description="Operations on tags", position = 4)
 public class TagController {
 
 	@Autowired
@@ -43,6 +46,7 @@ public class TagController {
 	 * @return HttpResponse entity with embedded HATEOAS-enabled Tag objects.
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
+	@ApiOperation(value = "Gets all tags.", notes = "Gets all tags in the database", response = Tag.class)
 	public HttpEntity<RestEnvelope<Resources<Tag>>> findAllTags(
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "offset", required = false) Integer offset,
@@ -77,6 +81,7 @@ public class TagController {
 	 * @return HttpResponse entity with a single embedded HATEOAS-enabled Tag object.
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@ApiOperation(value = "Gets a tag by ID.", notes = "Gets a tag record from the database by its primary key ID", response = Tag.class)
 	public HttpEntity<RestEnvelope<Tag>> findTagById(
 			@PathVariable("id") Integer id,
 			@RequestParam(value = "fields", required = false) String fields
@@ -108,6 +113,7 @@ public class TagController {
 	 * @return HttpResponse entity with embedded HATEOAS-enabled Tag objects.
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, params = {"label"})
+	@ApiOperation(value = "Gets all tags with the given label.", notes = "Gets all tags in the database with the given label attribute", response = Tag.class)
 	public HttpEntity<RestEnvelope<Resources<Tag>>> findTagsByLabel(
 			@RequestParam("label") String label,
 			@RequestParam(value = "limit", required = false) Integer limit,
@@ -144,6 +150,7 @@ public class TagController {
 	 * @return HttpResponse entity with embedded HATEOAS-enabled Tag objects.
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, params = {"sId"})
+	@ApiOperation(value = "Gets all tags associated with the given sample.", notes = "Gets all tags in the database linked tothe given sample by the sample primary key ID", response = Tag.class)
 	public HttpEntity<RestEnvelope<Resources<Tag>>> findTagsBySample(
 			@RequestParam("sId") Integer sId,
 			@RequestParam(value = "limit", required = false) Integer limit,
@@ -182,6 +189,7 @@ public class TagController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
+	@ApiOperation(value = "Creates a new tag.", notes = "Inserts a new tag record into the database and returns it.", response = Tag.class)
 	public HttpEntity<Tag> addTag(@RequestBody Tag tag){
 
 		tag = tagService.addTag(tag);
@@ -212,6 +220,7 @@ public class TagController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@ApiOperation(value = "Updates an existing tag.", notes = "Updates an existing tag record referenced by its primary key ID and returns it", response = Tag.class)
 	public HttpEntity<Tag> updateTag(
 			@RequestBody Tag tag,
 			@PathVariable("id") Integer id
@@ -255,6 +264,7 @@ public class TagController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@ApiOperation(value = "Deletes a tag.", notes = "Deletes a tag record from the database, given its primary key ID.", response = Tag.class)
 	public HttpEntity<Tag> deleteTag(@PathVariable("id") Integer id){
 
 		Integer rowCount = tagService.deleteTag(id);

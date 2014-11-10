@@ -1,10 +1,12 @@
 package org.oncoblocks.restdemo.controllers;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 import org.oncoblocks.restdemo.exceptions.MalformedEntityException;
 import org.oncoblocks.restdemo.exceptions.RequestFailureException;
 import org.oncoblocks.restdemo.exceptions.ResourceNotFoundException;
-import org.oncoblocks.restdemo.models.Sample;
 import org.oncoblocks.restdemo.models.RestEnvelope;
+import org.oncoblocks.restdemo.models.Sample;
 import org.oncoblocks.restdemo.services.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -28,6 +30,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Controller
 @ExposesResourceFor(Sample.class)
 @RequestMapping(value = "/api/v1/samples", produces = {"application/json", "application/xml", "text/plain", "text/csv"})
+@Api(value="Samples", description="Operations on samples", position = 3)
 public class SampleController {
 	
 	@Autowired
@@ -43,6 +46,7 @@ public class SampleController {
 	 * @return HttpResponse entity with embedded HATEOAS-enabled Sample objects.
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
+	@ApiOperation(value = "Gets all samples.", notes = "Gets all samples in the database", response = Sample.class)
 	public HttpEntity<RestEnvelope<Resources<Sample>>> findAllSamples(
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "offset", required = false) Integer offset,
@@ -83,6 +87,7 @@ public class SampleController {
 	 * @return HttpResponse entity with a single embedded HATEOAS-enabled Sample object.
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@ApiOperation(value = "Gets a sample by ID.", notes = "Gets a sample by its primary key ID", response = Sample.class)
 	public HttpEntity<RestEnvelope<Sample>> findSampleById(
 			@PathVariable("id") Integer id, 
 			@RequestParam(value = "fields", required = false) String fields
@@ -120,6 +125,7 @@ public class SampleController {
 	 * @return HttpResponse entity with embedded HATEOAS-enabled Sample objects.
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, params = {"sampleId"})
+	@ApiOperation(value = "Gets all samples with the given sampleId.", notes = "Gets all samples in the database with the given sampleId string name", response = Sample.class)
 	public HttpEntity<RestEnvelope<Resources<Sample>>> findSamplesBySampleId(
 			@RequestParam("sampleId") String sampleId,
 			@RequestParam(value = "limit", required = false) Integer limit,
@@ -162,6 +168,7 @@ public class SampleController {
 	 * @return HttpResponse entity with embedded HATEOAS-enabled Sample objects.
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, params = {"study"})
+	@ApiOperation(value = "Gets all samples with the given study attribute.", notes = "Gets all samples in the database with the matching study attribute", response = Sample.class)
 	public HttpEntity<RestEnvelope<Resources<Sample>>> findSamplesByStudy(
 			@RequestParam("study") String study,
 			@RequestParam(value = "limit", required = false) Integer limit,
@@ -205,6 +212,7 @@ public class SampleController {
 	 * @return HttpResponse entity with embedded HATEOAS-enabled Sample objects.
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, params = {"cancerTypeId"})
+	@ApiOperation(value = "Gets all samples with the given cancer type", notes = "Gets all samples in the database with the given cancer type primary key ID", response = Sample.class)
 	public HttpEntity<RestEnvelope<Resources<Sample>>> findSamplesByCancerType(
 			@RequestParam("cancerTypeId") Integer cancerTypeId,
 			@RequestParam(value = "limit", required = false) Integer limit,
@@ -246,6 +254,7 @@ public class SampleController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
+	@ApiOperation(value = "Creates a new sample.", notes = "Inserts a new sample record into the database and returns it.", response = Sample.class)
 	public HttpEntity<Sample> addSample(@RequestBody Sample sample){
 		
 		sample = sampleService.addSample(sample);
@@ -282,6 +291,7 @@ public class SampleController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@ApiOperation(value = "Updates an existing sample.", notes = "Updates an existing sample record and returns it.", response = Sample.class)
 	public HttpEntity<Sample> updateSample(
 			@RequestBody Sample sample,
 			@PathVariable("id") Integer id
@@ -331,6 +341,7 @@ public class SampleController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@ApiOperation(value = "Deletes a sample.", notes = "Deletes a sample record from the database, given its primary key ID", response = Sample.class)
 	public HttpEntity<Sample> deleteSample(@PathVariable("id") Integer id){
 		
 		Integer rowCount = sampleService.deleteSample(id);
