@@ -37,12 +37,13 @@ public class SwaggerConfig {
 
 	private ApiInfo apiInfo() {
 		ApiInfo apiInfo = new ApiInfo(
-				"Oncoblocks Demo REST API",
-				"Basic demonstration of an Oncoblocks-like web service built with Spring MVC, with REST API documentation by Swagger.",
-				"API TOS",
+				"Oncoblocks REST API, draft 0.1",
+				"Draft proposal of an Oncoblocks-like web service built with Spring MVC, with REST API documentation by Swagger."
+				+ "  Note that only dummy data is returned.",
+				"terms.html",
 				"woemler@blueprintmedicines.com",
-				"API License",
-				"API License URL"
+				"Apache 2.0",
+				"http://www.apache.org/licenses/LICENSE-2.0.html"
 		);
 		return apiInfo;
 	}

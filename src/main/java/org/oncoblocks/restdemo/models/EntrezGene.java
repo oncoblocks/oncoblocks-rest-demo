@@ -2,6 +2,7 @@ package org.oncoblocks.restdemo.models;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.wordnik.swagger.annotations.ApiModel;
 
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @XStreamAlias("entrezGene")
 @JsonRootName("entrezGene")
+@ApiModel(value = "A Gene")
 public class EntrezGene extends RestEntity {
 	
 	private Integer entrezGeneId;

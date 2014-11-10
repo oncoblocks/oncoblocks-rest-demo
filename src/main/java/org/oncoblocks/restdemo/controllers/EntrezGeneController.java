@@ -15,10 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -30,6 +34,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Controller
 @ExposesResourceFor(EntrezGene.class)
 @RequestMapping(value = "/api/v1/genes", produces = {"application/json", "application/xml", "text/plain", "text/csv"})
+@Api(value="Genes", description="Operations on genes", position = 1)
 public class EntrezGeneController {
 	
 	@Autowired
