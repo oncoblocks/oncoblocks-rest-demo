@@ -1,6 +1,5 @@
 package org.oncoblocks.restdemo.services;
 
-import org.oncoblocks.restdemo.models.EntrezGene;
 import org.oncoblocks.restdemo.models.Sample;
 import org.oncoblocks.restdemo.util.DummyDataGenerator;
 import org.springframework.stereotype.Service;
@@ -29,6 +28,14 @@ public class SampleService {
 
 	// Find by attributes
 	public List<Sample> findSamplesBySampleId(String sampleId, Integer limit, Integer offset){
+		return getDummySamples();
+	}
+
+	public List<Sample> findSamplesByStudy(String study, Integer limit, Integer offset){
+		return getDummySamples();
+	}
+
+	public List<Sample> findSamplesByCancerType(Integer cancerTypeId, Integer limit, Integer offset){
 		return getDummySamples();
 	}
 

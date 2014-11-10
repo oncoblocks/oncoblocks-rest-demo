@@ -2,7 +2,6 @@ package org.oncoblocks.restdemo.controllers;
 
 import org.oncoblocks.restdemo.models.Mutation;
 import org.oncoblocks.restdemo.models.RestEnvelope;
-import org.oncoblocks.restdemo.models.Sample;
 import org.oncoblocks.restdemo.services.MutationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -11,6 +10,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,7 +50,7 @@ public class MutationController {
 		List<Mutation> mutationList = new ArrayList<Mutation>();
 		for (Mutation mutation : mutationService.findMutations()) {
 			mutation.add(linkTo(methodOn(MutationController.class)
-					.findMutation(mutation.getMutationId()))
+					.findMutation(mutation.getMutationId(), null))
 					.withSelfRel());
 			mutation.add(linkTo(methodOn(EntrezGeneController.class)
 					.findEntrezGeneById(mutation.getEntrezGeneId(), fields))
@@ -71,5 +71,23 @@ public class MutationController {
 		restEnvelope.setFields(fields);
 
 		return new ResponseEntity<RestEnvelope<Resources<Mutation>>>(restEnvelope, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public HttpEntity<RestEnvelope<Mutation>> findMutation(
+			@PathVariable("id") Integer mutationId,
+			@RequestParam(value = "fields", required = false) String fields
+	) {
+
+		Mutation mutation = mutationService.findMutation(mutationId);
+		mutation.add(linkTo(methodOn(MutationController.class)
+			.findMutation(mutation.getMutationId(), null))
+			.withSelfRel());
+		
+		RestEnvelope<Mutation> restEnvelope =
+				new RestEnvelope<Mutation>(mutation);
+		restEnvelope.setFields(fields);
+
+		return new ResponseEntity<RestEnvelope<Mutation>>(restEnvelope, HttpStatus.OK);
 	}
 }

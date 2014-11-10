@@ -1,13 +1,12 @@
 package org.oncoblocks.restdemo.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.oncoblocks.restdemo.models.Mutation;
 import org.oncoblocks.restdemo.util.DummyDataGenerator;
-import org.oncoblocks.restdemo.models.Sample;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Dummy Mutation Service.
@@ -22,7 +21,7 @@ public class MutationService {
 	public List<Mutation> findMutations() {
 		ArrayList<Mutation> mutationList = new ArrayList<Mutation>();
 		for (int i=0; i<10; i++) {
-			Mutation mutation = findMutation();
+			Mutation mutation = findMutation(null);
 			mutationList.add(mutation);
 		}
 		return mutationList;
@@ -30,7 +29,7 @@ public class MutationService {
 
 	//  Find Mutaiton;
 	//  Returns dummy data.
-	public Mutation findMutation() {
+	public Mutation findMutation(Integer id) {
 		Mutation mutation = new Mutation();
 		DummyDataGenerator.createDummyData(mutation);
 		return mutation;
