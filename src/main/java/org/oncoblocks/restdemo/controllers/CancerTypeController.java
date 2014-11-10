@@ -3,6 +3,7 @@ package org.oncoblocks.restdemo.controllers;
 import org.oncoblocks.restdemo.exceptions.MalformedEntityException;
 import org.oncoblocks.restdemo.exceptions.RequestFailureException;
 import org.oncoblocks.restdemo.exceptions.ResourceNotFoundException;
+import org.oncoblocks.restdemo.models.EntrezGene;
 import org.oncoblocks.restdemo.models.RestEnvelope;
 import org.oncoblocks.restdemo.models.CancerType;
 import org.oncoblocks.restdemo.services.CancerTypeService;
@@ -14,6 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +32,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Controller
 @ExposesResourceFor(CancerType.class)
 @RequestMapping(value = "/api/v1/cancerTypes", produces = {"application/json", "application/xml", "text/plain", "text/csv"})
+@Api(value="Cancer Types", description="Operations on cancer types")
 public class CancerTypeController {
 
 	@Autowired
@@ -43,6 +48,7 @@ public class CancerTypeController {
 	 * @return HttpResponse entity with embedded HATEOAS-enabled CancerType objects.
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
+	@ApiOperation(value = "Gets all cancer types.", notes = "Gets all cancer types in the database", response = CancerType.class)	
 	public HttpEntity<RestEnvelope<Resources<CancerType>>> findAllCancerTypes(
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "offset", required = false) Integer offset,
@@ -77,6 +83,7 @@ public class CancerTypeController {
 	 * @return HttpResponse entity with a single embedded HATEOAS-enabled CancerType object.
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@ApiOperation(value = "Finds cancer type by ID.", notes = "Finds cancer type by ID.", response = CancerType.class)	
 	public HttpEntity<RestEnvelope<CancerType>> findCancerTypeById(
 			@PathVariable("id") Integer id,
 			@RequestParam(value = "fields", required = false) String fields
@@ -108,6 +115,7 @@ public class CancerTypeController {
 	 * @return HttpResponse entity with embedded HATEOAS-enabled CancerType objects.
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, params = {"name"})
+	@ApiOperation(value = "Finds cancer type by label.", notes = "Finds cancer type by label.", response = CancerType.class)	
 	public HttpEntity<RestEnvelope<Resources<CancerType>>> findCancerTypesByLabel(
 			@RequestParam("name") String name,
 			@RequestParam(value = "limit", required = false) Integer limit,
@@ -144,6 +152,7 @@ public class CancerTypeController {
 	 * @return HttpResponse entity with embedded HATEOAS-enabled CancerType objects.
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, params = {"parentId"})
+	@ApiOperation(value = "Finds cancer type by parent ID.", notes = "Finds cancer type by parent ID.", response = CancerType.class)	
 	public HttpEntity<RestEnvelope<Resources<CancerType>>> findCancerTypesByParentId(
 			@RequestParam("parentId") Integer parentId,
 			@RequestParam(value = "limit", required = false) Integer limit,
@@ -179,6 +188,7 @@ public class CancerTypeController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
+	@ApiOperation(value = "Adds a new cancer type.", notes = "Adds new cancer type.", response = CancerType.class)	
 	public HttpEntity<CancerType> addCancerType(@RequestBody CancerType cancerType){
 
 		cancerType = cancerTypeService.addCancerType(cancerType);
@@ -209,6 +219,7 @@ public class CancerTypeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@ApiOperation(value = "Updates the specified cancer type.", notes = "Updates the specified cancer type.", response = CancerType.class)	
 	public HttpEntity<CancerType> updateCancerType(
 			@RequestBody CancerType cancerType,
 			@PathVariable("id") Integer id
@@ -247,11 +258,12 @@ public class CancerTypeController {
 
 
 	/**
-	 * Deletes a cell line
+	 * Deletes a cancer type
 	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@ApiOperation(value = "Deletes the specified cancer type.", notes = "Deletes the specified cancer type.", response = CancerType.class)	
 	public HttpEntity<CancerType> deleteCancerType(@PathVariable("id") Integer id){
 
 		Integer rowCount = cancerTypeService.deleteCancerType(id);

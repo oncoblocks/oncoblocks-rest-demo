@@ -34,7 +34,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Controller
 @ExposesResourceFor(EntrezGene.class)
 @RequestMapping(value = "/api/v1/genes", produces = {"application/json", "application/xml", "text/plain", "text/csv"})
-@Api(value="Genes", description="Operations on genes", position = 1)
+@Api(value="Genes", description="Operations on genes")
 public class EntrezGeneController {
 	
 	@Autowired

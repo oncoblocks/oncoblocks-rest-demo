@@ -1,5 +1,6 @@
 package org.oncoblocks.restdemo.controllers;
 
+import org.oncoblocks.restdemo.models.CancerType;
 import org.oncoblocks.restdemo.models.Mutation;
 import org.oncoblocks.restdemo.models.RestEnvelope;
 import org.oncoblocks.restdemo.services.MutationService;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +32,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Controller
 @ExposesResourceFor(Mutation.class)
 @RequestMapping(value = "/api/v1/mutations", produces = {"application/json", "application/xml", "text/plain", "text/csv"})
+@Api(value="Mutations", description="Operations on mutations")
 public class MutationController {
 	
 	@Autowired
@@ -36,6 +41,7 @@ public class MutationController {
 	//// Read
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
+	@ApiOperation(value = "Gets mutations.", notes = "Gets mutations.", response = Mutation.class)	
 	public HttpEntity<RestEnvelope<Resources<Mutation>>> findMutations(
 			@RequestParam(value = "geneSymbol", required = false) String geneSymbol,
 			@RequestParam(value = "entrezGeneId", required = false) Integer entrezGeneId,
@@ -74,6 +80,7 @@ public class MutationController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@ApiOperation(value = "Gets mutation by ID.", notes = "Gets mutation by ID.", response = Mutation.class)	
 	public HttpEntity<RestEnvelope<Mutation>> findMutation(
 			@PathVariable("id") Integer mutationId,
 			@RequestParam(value = "fields", required = false) String fields
