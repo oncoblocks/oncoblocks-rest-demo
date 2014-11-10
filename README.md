@@ -15,6 +15,14 @@ Build the project with maven and deploy in Tomcat or another web app container:
 mvn -U clean install
 ```
 
+To run:
+
+```
+sh target/bin/webapp
+```
+
+Then go to:  http://localhost:8080/
+
 To deploy to another machine, update the application URLs in the following files:
 
 - `src/main/resources/config/app.properties`
