@@ -17,7 +17,7 @@ public class WebController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String apiDocs(){
-		return "redirect:/docs/index.html";
+		return "redirect:/docs/index.jsp";
 	}
 	
 }
