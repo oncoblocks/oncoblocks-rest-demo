@@ -1,9 +1,12 @@
 package org.oncoblocks.restdemo.services;
 
+import org.oncoblocks.restdemo.models.EntrezGene;
 import org.oncoblocks.restdemo.models.Sample;
+import org.oncoblocks.restdemo.util.DummyDataGenerator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,47 +17,48 @@ import java.util.List;
 @Transactional
 public class SampleService {
 	
-//	@Autowired
-//	private SampleDao sampleDao;
-
 	// Find all
 	public List<Sample> findAllSamples(Integer limit, Integer offset){
-		return null;
-		//return sampleDao.findAllSamples(limit, offset);
+		return getDummySamples();
 	}
 
 	// Find by ID
 	public Sample findSampleById(Integer id){
-		return null;
-		//return sampleDao.findSampleById(id);
+		return createDummySample();
 	}
 
 	// Find by attributes
 	public List<Sample> findSamplesBySampleId(String sampleId, Integer limit, Integer offset){
-		return null;
-		//return sampleDao.findSampleByCcleName(ccleName, limit, offset);
+		return getDummySamples();
 	}
 
-	// Add cell line
+	// Add a sample
 	public Sample addSample(Sample sample){
-//		Integer sampleId = sampleDao.addSample(sample);
-//		if (sampleId != null && sampleId > 0){
-//			sample = sampleDao.findSampleById(sampleId);
-//		}
-//		return sample;
-		return null;
+		return createDummySample();
 	}
 
-	// Update cell line
+	// Update sample
 	public Integer updateSample(Sample sample){
-		//return sampleDao.updateSample(sample);
-		return null;
+		return 1;
 	}
 
 	// Delete cell line
 	public Integer deleteSample(Integer id){
-		//return sampleDao.deleteSample(id);
-		return null;
+		return 1;
 	}
 	
+	private List<Sample> getDummySamples() {
+		List<Sample> sampleList = new ArrayList<Sample>();
+		for (int i=0; i<20; i++) {
+			Sample sample = createDummySample();
+			sampleList.add(sample);
+		}
+		return sampleList;
+	}
+	
+	private Sample createDummySample() {
+		Sample sample = new Sample();
+		DummyDataGenerator.createDummyData(sample);
+		return sample;
+	}
 }

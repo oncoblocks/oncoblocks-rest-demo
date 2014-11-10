@@ -1,9 +1,12 @@
 package org.oncoblocks.restdemo.services;
 
+import org.oncoblocks.restdemo.models.Sample;
 import org.oncoblocks.restdemo.models.Tag;
+import org.oncoblocks.restdemo.util.DummyDataGenerator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,5 +44,20 @@ public class TagService {
 	public Integer deleteTag(Integer id){
 		return null;
 	}
+	
+	private List<Tag> getDummySamples() {
+		List<Tag> tagList = new ArrayList<Tag>();
+		for (int i=0; i<20; i++) {
+			Tag tag = createDummyTag();
+			tagList.add(tag);
+		}
+		return tagList;
+	}
+	
+	private Tag createDummyTag() {
+		Tag tag = new Tag();
+		DummyDataGenerator.createDummyData(tag);
+		return tag;
+	}	
 	
 }
