@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import com.wordnik.swagger.annotations.ApiOperation;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class EntrezGeneController {
 	
 	// Find all
 	@RequestMapping(value = "", method = RequestMethod.GET)
+	@ApiOperation(value = "Gets all genes.", notes = "Gets all genes in the database", response = EntrezGene.class)
 	public HttpEntity<RestEnvelope<Resources<EntrezGene>>> findAllEntrezGenes(
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "offset", required = false) Integer offset,
@@ -63,6 +66,7 @@ public class EntrezGeneController {
 	
 	// Find by ID
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@ApiOperation(value = "Finds gene by Entrez Gene ID.", notes = "Finds gene by Entrez Gene ID.", response = EntrezGene.class)
 	public HttpEntity<RestEnvelope<EntrezGene>> findEntrezGeneById(
 			@PathVariable("id") Integer id,
 			@RequestParam(value = "fields", required = false) String fields
@@ -91,6 +95,7 @@ public class EntrezGeneController {
 	
 	// Find by attribute
 	@RequestMapping(value = "", method = RequestMethod.GET, params = {"geneSymbol"})
+	@ApiOperation(value = "Finds gene by gene symbol.", notes = "Finds gene by gene symbol", response = EntrezGene.class)
 	public HttpEntity<RestEnvelope<Resources<EntrezGene>>> findEntrezGenesByGeneSymbol(
 			@RequestParam("geneSymbol") String geneSymbol,
 			@RequestParam(value = "limit", required = false) Integer limit,
@@ -120,6 +125,7 @@ public class EntrezGeneController {
 	
 	// Add gene
 	@RequestMapping(value = "", method = RequestMethod.POST)
+	@ApiOperation(value = "Adds a new gene.", notes = "Adds a new gene.")
 	public HttpEntity<EntrezGene> addEntrezGene(@RequestBody EntrezGene entrezGene){
 		
 		entrezGene = entrezGeneService.addEntrezGene(entrezGene);
@@ -145,6 +151,7 @@ public class EntrezGeneController {
 	
 	// Update gene
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@ApiOperation(value = "Updates the specified gene.", notes = "Updates the specified gene.")
 	public HttpEntity<EntrezGene> updateEntrezGene(
 			@RequestBody EntrezGene entrezGene,
 			@PathVariable("id") Integer id){
@@ -180,6 +187,7 @@ public class EntrezGeneController {
 	
 	// Delete gene
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@ApiOperation(value = "Deletes the specified gene.", notes = "Deletes the specified gene.")
 	public HttpEntity<EntrezGene> deleteEntrezGene(@PathVariable("id") Integer id){
 		
 		Integer rowCount = entrezGeneService.deleteEntrezGene(id);
