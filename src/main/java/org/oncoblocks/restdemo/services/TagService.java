@@ -18,7 +18,7 @@ import java.util.List;
 public class TagService {
 	
 	public List<Tag> findAllTags(Integer limit, Integer offset){
-		return null;
+		return getDummyTags();
 	}
 	
 	public Tag findTagById(Integer id){
@@ -26,26 +26,26 @@ public class TagService {
 	}
 	
 	public List<Tag> findTagsByLabel(String label, Integer limit, Integer offset){
-		return null;
+		return getDummyTags();
 	}
 	
 	public List<Tag> findTagsBySample(Integer id, Integer limit, Integer offset){
-		return null;
+		return getDummyTags();
 	}
 	
 	public Tag addTag(Tag tag){
-		return null;
+		return createDummyTag();
 	}
 	
 	public Integer updateTag(Tag tag){
-		return null;
+		return 1;
 	}
 	
 	public Integer deleteTag(Integer id){
-		return null;
+		return 1;
 	}
 	
-	private List<Tag> getDummySamples() {
+	private List<Tag> getDummyTags() {
 		List<Tag> tagList = new ArrayList<Tag>();
 		for (int i=0; i<20; i++) {
 			Tag tag = createDummyTag();
