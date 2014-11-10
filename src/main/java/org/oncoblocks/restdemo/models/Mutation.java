@@ -1,6 +1,12 @@
 package org.oncoblocks.restdemo.models;
 
-public class Mutation {
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+@XStreamAlias("mutation")
+@JsonRootName("mutation")
+public class Mutation extends RestEntity{
+	private Integer mutationId;
 	private String sampleId;
 	private Integer entrezGeneId;
 	private String geneSymbol;
@@ -31,6 +37,14 @@ public class Mutation {
 	private String uniprotRegion;
 	private String uniprotSite;
 	private String vertebrateAaAlignment;
+
+	public Integer getMutationId() {
+		return mutationId;
+	}
+
+	public void setMutationId(Integer mutationId) {
+		this.mutationId = mutationId;
+	}
 
 	public String getSampleId() {
 		return sampleId;

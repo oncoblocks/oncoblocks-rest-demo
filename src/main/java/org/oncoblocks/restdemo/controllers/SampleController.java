@@ -54,6 +54,12 @@ public class SampleController {
 			sample.add(linkTo(methodOn(SampleController.class)
 					.findSampleById(sample.getSid(),fields))
 					.withSelfRel());
+			sample.add(linkTo(methodOn(TagController.class)
+					.findTagsBySample(sample.getSid(), limit, offset, fields))
+					.withRel("tags"));
+			sample.add(linkTo(methodOn(CancerTypeController.class)
+					.findCancerTypeById(sample.getCancerTypeId(), fields))
+					.withRel("cancerType"));
 			sampleList.add(sample);
 		}
 		
@@ -91,6 +97,12 @@ public class SampleController {
 		sample.add(linkTo(methodOn(SampleController.class)
 				.findSampleById(sample.getSid(),fields))
 				.withSelfRel());
+		sample.add(linkTo(methodOn(TagController.class)
+				.findTagsBySample(sample.getSid(), null, null, fields))
+				.withRel("tags"));
+		sample.add(linkTo(methodOn(CancerTypeController.class)
+				.findCancerTypeById(sample.getCancerTypeId(), fields))
+				.withRel("cancerType"));
 
 		RestEnvelope<Sample> responseEnvelope = new RestEnvelope<Sample>(sample);
 		responseEnvelope.setFields(fields);
@@ -120,6 +132,12 @@ public class SampleController {
 			sample.add(linkTo(methodOn(SampleController.class)
 					.findSampleById(sample.getSid(),fields))
 					.withSelfRel());
+			sample.add(linkTo(methodOn(TagController.class)
+					.findTagsBySample(sample.getSid(), limit, offset, fields))
+					.withRel("tags"));
+			sample.add(linkTo(methodOn(CancerTypeController.class)
+					.findCancerTypeById(sample.getCancerTypeId(), fields))
+					.withRel("cancerType"));
 			sampleList.add(sample);
 		}
 
@@ -133,6 +151,91 @@ public class SampleController {
 
 		return new ResponseEntity<RestEnvelope<Resources<Sample>>>(responseEnvelope, HttpStatus.OK);
 		
+	}
+
+	/**
+	 * Fetch Sample name.  Supports pagination and field filtering.
+	 * @param study Name of the target sample.
+	 * @param limit Maximum number of records to return, defaults to all records.
+	 * @param offset Record index from which to start, for use in pagination.  Defaults to 0 (first record).
+	 * @param fields Comma-delimited list of fields to be included in the response.  Only listed fields are returned, including hypermedia links.
+	 * @return HttpResponse entity with embedded HATEOAS-enabled Sample objects.
+	 */
+	@RequestMapping(value = "", method = RequestMethod.GET, params = {"study"})
+	public HttpEntity<RestEnvelope<Resources<Sample>>> findSamplesByStudy(
+			@RequestParam("study") String study,
+			@RequestParam(value = "limit", required = false) Integer limit,
+			@RequestParam(value = "offset", required = false) Integer offset,
+			@RequestParam(value = "fields", required = false) String fields
+	){
+
+		List<Sample> sampleList = new ArrayList<Sample>();
+		for (Sample sample: sampleService.findSamplesByStudy(study, limit, offset)){
+			sample.add(linkTo(methodOn(SampleController.class)
+					.findSampleById(sample.getSid(),fields))
+					.withSelfRel());
+			sample.add(linkTo(methodOn(TagController.class)
+					.findTagsBySample(sample.getSid(), limit, offset, fields))
+					.withRel("tags"));
+			sample.add(linkTo(methodOn(CancerTypeController.class)
+					.findCancerTypeById(sample.getCancerTypeId(), fields))
+					.withRel("cancerType"));
+			sampleList.add(sample);
+		}
+
+		Resources<Sample> resources = new Resources<Sample>(sampleList);
+		resources.add(linkTo(methodOn(SampleController.class)
+				.findAllSamples(limit, offset, fields))
+				.withSelfRel());
+
+		RestEnvelope<Resources<Sample>> responseEnvelope = new RestEnvelope<Resources<Sample>>(resources);
+		responseEnvelope.setFields(fields);
+
+		return new ResponseEntity<RestEnvelope<Resources<Sample>>>(responseEnvelope, HttpStatus.OK);
+
+	}
+
+
+	/**
+	 * Fetch Sample name.  Supports pagination and field filtering.
+	 * @param cancerTypeId Name of the target sample.
+	 * @param limit Maximum number of records to return, defaults to all records.
+	 * @param offset Record index from which to start, for use in pagination.  Defaults to 0 (first record).
+	 * @param fields Comma-delimited list of fields to be included in the response.  Only listed fields are returned, including hypermedia links.
+	 * @return HttpResponse entity with embedded HATEOAS-enabled Sample objects.
+	 */
+	@RequestMapping(value = "", method = RequestMethod.GET, params = {"cancerTypeId"})
+	public HttpEntity<RestEnvelope<Resources<Sample>>> findSamplesByCancerType(
+			@RequestParam("cancerTypeId") Integer cancerTypeId,
+			@RequestParam(value = "limit", required = false) Integer limit,
+			@RequestParam(value = "offset", required = false) Integer offset,
+			@RequestParam(value = "fields", required = false) String fields
+	){
+
+		List<Sample> sampleList = new ArrayList<Sample>();
+		for (Sample sample: sampleService.findSamplesByCancerType(cancerTypeId, limit, offset)){
+			sample.add(linkTo(methodOn(SampleController.class)
+					.findSampleById(sample.getSid(),fields))
+					.withSelfRel());
+			sample.add(linkTo(methodOn(TagController.class)
+					.findTagsBySample(sample.getSid(), limit, offset, fields))
+					.withRel("tags"));
+			sample.add(linkTo(methodOn(CancerTypeController.class)
+					.findCancerTypeById(sample.getCancerTypeId(), fields))
+					.withRel("cancerType"));
+			sampleList.add(sample);
+		}
+
+		Resources<Sample> resources = new Resources<Sample>(sampleList);
+		resources.add(linkTo(methodOn(SampleController.class)
+				.findAllSamples(limit, offset, fields))
+				.withSelfRel());
+
+		RestEnvelope<Resources<Sample>> responseEnvelope = new RestEnvelope<Resources<Sample>>(resources);
+		responseEnvelope.setFields(fields);
+
+		return new ResponseEntity<RestEnvelope<Resources<Sample>>>(responseEnvelope, HttpStatus.OK);
+
 	}
 
 	//// Create
@@ -152,6 +255,12 @@ public class SampleController {
 			sample.add(linkTo(methodOn(SampleController.class)
 					.findSampleById(sample.getSid(),null))
 					.withSelfRel());
+			sample.add(linkTo(methodOn(TagController.class)
+					.findTagsBySample(sample.getSid(), null, null, null))
+					.withRel("tags"));
+			sample.add(linkTo(methodOn(CancerTypeController.class)
+					.findCancerTypeById(sample.getCancerTypeId(), null))
+					.withRel("cancerType"));
 			return new ResponseEntity<Sample>(sample, HttpStatus.CREATED);
 			
 		} else {
@@ -193,6 +302,12 @@ public class SampleController {
 			sample.add(linkTo(methodOn(SampleController.class)
 					.findSampleById(sample.getSid(),null))
 					.withSelfRel());
+			sample.add(linkTo(methodOn(TagController.class)
+					.findTagsBySample(sample.getSid(), null, null, null))
+					.withRel("tags"));
+			sample.add(linkTo(methodOn(CancerTypeController.class)
+					.findCancerTypeById(sample.getCancerTypeId(), null))
+					.withRel("cancerType"));
 			return new ResponseEntity<Sample>(sample, HttpStatus.CREATED);
 			
 		} else {
