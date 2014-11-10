@@ -35,7 +35,7 @@ public class EntrezGeneController {
 	
 	// Find all
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<EntrezGene> findAllEntrezGenes(
+	public HttpEntity<RestEnvelope<Resources<EntrezGene>>> findAllEntrezGenes(
 			@RequestParam(value = "limit", required = false) Integer limit,
 			@RequestParam(value = "offset", required = false) Integer offset,
 			@RequestParam(value = "fields", required = false) String fields
@@ -57,8 +57,8 @@ public class EntrezGeneController {
 		RestEnvelope<Resources<EntrezGene>> envelope = new RestEnvelope<Resources<EntrezGene>>(resources);
 		envelope.setFields(fields);
 		
-		//return new ResponseEntity<RestEnvelope<Resources<EntrezGene>>>(envelope, HttpStatus.OK);
-		return entrezGeneList;
+		return new ResponseEntity<RestEnvelope<Resources<EntrezGene>>>(envelope, HttpStatus.OK);
+		
 	}
 	
 	// Find by ID
