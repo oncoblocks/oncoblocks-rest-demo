@@ -1,8 +1,10 @@
 package org.oncoblocks.restdemo.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.oncoblocks.restdemo.models.EntrezGene;
+import org.oncoblocks.restdemo.util.DummyDataGenerator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,48 +16,48 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class EntrezGeneService {
 	
-//	@Autowired
-//	private EntrezGeneDao entrezGeneDao;
-
 	// Find all
 	public List<EntrezGene> findAllEntrezGenes(Integer limit, Integer offset){
-		//		return entrezGeneDao.findAllEntrezGenes(limit, offset);
-		return null;
+		return getDummyGenes();
 	}
 
 	// Find by ID
 	public EntrezGene findEntrezGeneById(Integer id){
-		//return entrezGeneDao.findEntrezGeneById(id);
-		return null;
+		return createDummyGene();
 	}
 
 	// Find by attribute
 	public List<EntrezGene> findEntrezGenesByGeneSymbol(String geneSymbol, Integer limit, Integer offset){
-		//return entrezGeneDao.findEntrezGenesByGeneSymbol(geneSymbol, limit, offset);
-		return null;
+		return getDummyGenes();
 	}
 
 	// Add gene
 	public EntrezGene addEntrezGene(EntrezGene entrezGene){
-		//Integer entrezGeneId = entrezGeneDao.addEntrezGene(entrezGene);
-		
-//		if (entrezGeneId != null && entrezGeneId > 0){
-//			entrezGene = entrezGeneDao.findEntrezGeneById(entrezGeneId);
-//		}
-//		return entrezGene;
-		return null;
+		return createDummyGene();
 	}
 
 	// Update gene
 	public Integer updateEntrezGene(EntrezGene entrezGene){
-		//return entrezGeneDao.updateEntrezGene(entrezGene);
-		return null;
+		return 1;
 	}
 
 	// Delete gene
 	public Integer deleteEntrezGene(Integer id){
-		//return entrezGeneDao.deleteEntrezGene(id);
-		return null;
+		return 1;
 	}
 	
+	private List<EntrezGene> getDummyGenes() {
+		List<EntrezGene> geneList = new ArrayList<EntrezGene>();
+		for (int i=0; i<20; i++) {
+			EntrezGene gene = createDummyGene();
+			geneList.add(gene);
+		}
+		return geneList;
+	}
+	
+	private EntrezGene createDummyGene() {
+		EntrezGene gene = new EntrezGene();
+		DummyDataGenerator.createDummyData(gene);
+		return gene;
+	}		
 }

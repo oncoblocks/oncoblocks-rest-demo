@@ -22,10 +22,17 @@ public class MutationService {
 	public List<Mutation> findMutations() {
 		ArrayList<Mutation> mutationList = new ArrayList<Mutation>();
 		for (int i=0; i<10; i++) {
-			Mutation mutation = new Mutation();
-			DummyDataGenerator.createDummyData(mutation);
+			Mutation mutation = findMutation();
 			mutationList.add(mutation);
 		}
 		return mutationList;
+	}
+
+	//  Find Mutaiton;
+	//  Returns dummy data.
+	public Mutation findMutation() {
+		Mutation mutation = new Mutation();
+		DummyDataGenerator.createDummyData(mutation);
+		return mutation;
 	}
 }
