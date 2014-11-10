@@ -188,7 +188,7 @@ public class CancerTypeController {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	@ApiOperation(value = "Adds a new cancer type.", notes = "Adds new cancer type.", response = CancerType.class)	
+	@ApiOperation(value = "Adds a new cancer type.", notes = "Adds a new cancer type.", response = CancerType.class)	
 	public HttpEntity<CancerType> addCancerType(@RequestBody CancerType cancerType){
 
 		cancerType = cancerTypeService.addCancerType(cancerType);
