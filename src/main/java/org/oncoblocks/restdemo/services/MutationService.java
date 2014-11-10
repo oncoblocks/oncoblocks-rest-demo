@@ -2,7 +2,7 @@ package org.oncoblocks.restdemo.services;
 
 import java.util.List;
 
-import org.oncoblocks.restdemo.models.CellLine;
+import org.oncoblocks.restdemo.models.Sample;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MutationService {
 	
 	// Find all
-	public List<CellLine> findMutations(){
+	public List<Sample> findMutations(){
 		return null;
 	}
 }
