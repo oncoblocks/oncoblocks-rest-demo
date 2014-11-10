@@ -45,7 +45,7 @@ public class MutationController {
 			@RequestParam(value = "aaChange", required = false) String aaChange
 	){
 
-		List<Mutation> mutationList = new ArrayList<Mutation>();
+		List<Mutation> mutationList = mutationService.findMutations();
 		Resources<Mutation> resources = new Resources<Mutation>(mutationList);
 		RestEnvelope<Resources<Mutation>> responseEnvelope = new RestEnvelope<Resources<Mutation>>(resources);
 		return new ResponseEntity<RestEnvelope<Resources<Mutation>>>(responseEnvelope, HttpStatus.OK);

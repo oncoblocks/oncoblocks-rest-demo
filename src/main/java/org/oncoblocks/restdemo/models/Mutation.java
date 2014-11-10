@@ -4,8 +4,6 @@ public class Mutation {
 	private String sampleId;
 	private Integer entrezGeneId;
 	private String geneSymbol;
-	private String isKinase;
-	private String isCgcGene;
 	private String referenceGenome;
 	private String chromosome;
 	private Integer dnaStartPosition;
@@ -23,7 +21,7 @@ public class Mutation {
 	private String transcriptStrand;
 	private String cDnaChange;
 	private String codonChange;
-	private String proteinChange;
+	private String aaChange;
 	private String otherTranscript;
 	private String refseqMrnaId;
 	private String refseqProtId;
@@ -56,22 +54,6 @@ public class Mutation {
 
 	public void setGeneSymbol(String geneSymbol) {
 		this.geneSymbol = geneSymbol;
-	}
-
-	public String getIsKinase() {
-		return isKinase;
-	}
-
-	public void setIsKinase(String isKinase) {
-		this.isKinase = isKinase;
-	}
-
-	public String getIsCgcGene() {
-		return isCgcGene;
-	}
-
-	public void setIsCgcGene(String isCgcGene) {
-		this.isCgcGene = isCgcGene;
 	}
 
 	public String getReferenceGenome() {
@@ -210,12 +192,12 @@ public class Mutation {
 		this.codonChange = codonChange;
 	}
 
-	public String getProteinChange() {
-		return proteinChange;
+	public String getAAChange() {
+		return aaChange;
 	}
 
-	public void setProteinChange(String proteinChange) {
-		this.proteinChange = proteinChange;
+	public void setAAChange(String aaChange) {
+		this.aaChange = aaChange;
 	}
 
 	public String getOtherTranscript() {
