@@ -25,7 +25,6 @@ import java.util.List;
  */
 
 @Configuration
-@Import({DataSourceConfig.class})
 @EnableWebMvc
 @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
 @ComponentScan(basePackages = {"org.oncoblocks.restdemo"})
