@@ -1,0 +1,2291 @@
+{
+    "apiVersion": "1.0",
+    "swaggerVersion": "1.2",
+    "info": {
+        "title": "Oncoblocks REST API, draft 0.1",
+        "description": "Draft proposal of an Oncoblocks-like web service built with Spring MVC, with REST API documentation by Swagger.  Note that only dummy data is returned.",
+        "termsOfServiceUrl": "terms.html",
+        "contact": "woemler@blueprintmedicines.com",
+        "license": "Apache 2.0",
+        "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "apis": [
+        {
+            "path": "/api/v1/cancerTypes",
+            "description": "findCancerTypesByLabel",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Finds cancer type by label.",
+                    "notes": "Finds cancer type by label.",
+                    "type": "CancerType",
+                    "nickname": "findCancerTypesByLabel",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "description": "name",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«CancerType»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/cancerTypes",
+            "description": "findAllCancerTypes",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets all cancer types.",
+                    "notes": "Gets all cancer types in the database",
+                    "type": "CancerType",
+                    "nickname": "findAllCancerTypes",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«CancerType»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/cancerTypes",
+            "description": "findCancerTypesByParentId",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Finds cancer type by parent ID.",
+                    "notes": "Finds cancer type by parent ID.",
+                    "type": "CancerType",
+                    "nickname": "findCancerTypesByParentId",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "parentId",
+                            "description": "parentId",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«CancerType»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/cancerTypes",
+            "description": "addCancerType",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Adds a new cancer type.",
+                    "notes": "Adds a new cancer type.",
+                    "type": "CancerType",
+                    "nickname": "addCancerType",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "cancerType",
+                            "description": "cancerType",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "CancerType",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": null,
+                            "responseModel": "HttpEntity«CancerType»"
+                        },
+                        {
+                            "code": 201,
+                            "message": "Created"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/cancerTypes/{id}",
+            "description": "updateCancerType",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Updates the specified cancer type.",
+                    "notes": "Updates the specified cancer type.",
+                    "type": "CancerType",
+                    "nickname": "updateCancerType",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "cancerType",
+                            "description": "cancerType",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "CancerType",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "id",
+                            "description": "id",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": null,
+                            "responseModel": "HttpEntity«CancerType»"
+                        },
+                        {
+                            "code": 201,
+                            "message": "Created"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/cancerTypes/{id}",
+            "description": "findCancerTypeById",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Finds cancer type by ID.",
+                    "notes": "Finds cancer type by ID.",
+                    "type": "CancerType",
+                    "nickname": "findCancerTypeById",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "id",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«CancerType»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/cancerTypes/{id}",
+            "description": "deleteCancerType",
+            "operations": [
+                {
+                    "method": "DELETE",
+                    "summary": "Deletes the specified cancer type.",
+                    "notes": "Deletes the specified cancer type.",
+                    "type": "CancerType",
+                    "nickname": "deleteCancerType",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "id",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": null,
+                            "responseModel": "HttpEntity«CancerType»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 204,
+                            "message": "No Content"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/genes",
+            "description": "addEntrezGene",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Adds a new gene.",
+                    "notes": "Adds a new gene.",
+                    "type": "HttpEntity«EntrezGene»",
+                    "nickname": "addEntrezGene",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "entrezGene",
+                            "description": "entrezGene",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "EntrezGene",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": null,
+                            "responseModel": "HttpEntity«EntrezGene»"
+                        },
+                        {
+                            "code": 201,
+                            "message": "Created"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/genes",
+            "description": "findEntrezGenesByGeneSymbol",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Finds gene by gene symbol.",
+                    "notes": "Finds gene by gene symbol",
+                    "type": "EntrezGene",
+                    "nickname": "findEntrezGenesByGeneSymbol",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "geneSymbol",
+                            "description": "geneSymbol",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«EntrezGene»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/genes",
+            "description": "findAllEntrezGenes",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets all genes.",
+                    "notes": "Gets all genes in the database",
+                    "type": "EntrezGene",
+                    "nickname": "findAllEntrezGenes",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«EntrezGene»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/genes/{id}",
+            "description": "updateEntrezGene",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Updates the specified gene.",
+                    "notes": "Updates the specified gene.",
+                    "type": "HttpEntity«EntrezGene»",
+                    "nickname": "updateEntrezGene",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "entrezGene",
+                            "description": "entrezGene",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "EntrezGene",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "id",
+                            "description": "id",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": null,
+                            "responseModel": "HttpEntity«EntrezGene»"
+                        },
+                        {
+                            "code": 201,
+                            "message": "Created"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/genes/{id}",
+            "description": "deleteEntrezGene",
+            "operations": [
+                {
+                    "method": "DELETE",
+                    "summary": "Deletes the specified gene.",
+                    "notes": "Deletes the specified gene.",
+                    "type": "HttpEntity«EntrezGene»",
+                    "nickname": "deleteEntrezGene",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "id",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": null,
+                            "responseModel": "HttpEntity«EntrezGene»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 204,
+                            "message": "No Content"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/genes/{id}",
+            "description": "findEntrezGeneById",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Finds gene by Entrez Gene ID.",
+                    "notes": "Finds gene by Entrez Gene ID.",
+                    "type": "EntrezGene",
+                    "nickname": "findEntrezGeneById",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "id",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«EntrezGene»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/mutations",
+            "description": "findMutations",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets mutations.",
+                    "notes": "Gets mutations.",
+                    "type": "Mutation",
+                    "nickname": "findMutations",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "geneSymbol",
+                            "description": "geneSymbol",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "entrezGeneId",
+                            "description": "entrezGeneId",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "sampleId",
+                            "description": "sampleId",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "variantType",
+                            "description": "variantType",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "aaChange",
+                            "description": "aaChange",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«Mutation»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/mutations/{id}",
+            "description": "findMutation",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets mutation by ID.",
+                    "notes": "Gets mutation by ID.",
+                    "type": "Mutation",
+                    "nickname": "findMutation",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "mutationId",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Mutation»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/samples",
+            "description": "addSample",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Creates a new sample.",
+                    "notes": "Inserts a new sample record into the database and returns it.",
+                    "type": "Sample",
+                    "nickname": "addSample",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "sample",
+                            "description": "sample",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "Sample",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": null,
+                            "responseModel": "HttpEntity«Sample»"
+                        },
+                        {
+                            "code": 201,
+                            "message": "Created"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/samples",
+            "description": "findSamplesByStudy",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets all samples with the given study attribute.",
+                    "notes": "Gets all samples in the database with the matching study attribute",
+                    "type": "Sample",
+                    "nickname": "findSamplesByStudy",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "study",
+                            "description": "study",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«Sample»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/samples",
+            "description": "findSamplesByCancerType",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets all samples with the given cancer type",
+                    "notes": "Gets all samples in the database with the given cancer type primary key ID",
+                    "type": "Sample",
+                    "nickname": "findSamplesByCancerType",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "cancerTypeId",
+                            "description": "cancerTypeId",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«Sample»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/samples",
+            "description": "findAllSamples",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets all samples.",
+                    "notes": "Gets all samples in the database",
+                    "type": "Sample",
+                    "nickname": "findAllSamples",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«Sample»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/samples",
+            "description": "findSamplesBySampleId",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets all samples with the given sampleId.",
+                    "notes": "Gets all samples in the database with the given sampleId string name",
+                    "type": "Sample",
+                    "nickname": "findSamplesBySampleId",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "sampleId",
+                            "description": "sampleId",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«Sample»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/samples/{id}",
+            "description": "findSampleById",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets a sample by ID.",
+                    "notes": "Gets a sample by its primary key ID",
+                    "type": "Sample",
+                    "nickname": "findSampleById",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "id",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Sample»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/samples/{id}",
+            "description": "updateSample",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Updates an existing sample.",
+                    "notes": "Updates an existing sample record and returns it.",
+                    "type": "Sample",
+                    "nickname": "updateSample",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "sample",
+                            "description": "sample",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "Sample",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "id",
+                            "description": "id",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": null,
+                            "responseModel": "HttpEntity«Sample»"
+                        },
+                        {
+                            "code": 201,
+                            "message": "Created"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/samples/{id}",
+            "description": "deleteSample",
+            "operations": [
+                {
+                    "method": "DELETE",
+                    "summary": "Deletes a sample.",
+                    "notes": "Deletes a sample record from the database, given its primary key ID",
+                    "type": "Sample",
+                    "nickname": "deleteSample",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "id",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": null,
+                            "responseModel": "HttpEntity«Sample»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 204,
+                            "message": "No Content"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/tags",
+            "description": "findTagsByLabel",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets all tags with the given label.",
+                    "notes": "Gets all tags in the database with the given label attribute",
+                    "type": "Tag",
+                    "nickname": "findTagsByLabel",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "label",
+                            "description": "label",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«Tag»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/tags",
+            "description": "findAllTags",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets all tags.",
+                    "notes": "Gets all tags in the database",
+                    "type": "Tag",
+                    "nickname": "findAllTags",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«Tag»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/tags",
+            "description": "addTag",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Creates a new tag.",
+                    "notes": "Inserts a new tag record into the database and returns it.",
+                    "type": "Tag",
+                    "nickname": "addTag",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "tag",
+                            "description": "tag",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "Tag",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": null,
+                            "responseModel": "HttpEntity«Tag»"
+                        },
+                        {
+                            "code": 201,
+                            "message": "Created"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/tags",
+            "description": "findTagsBySample",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets all tags associated with the given sample.",
+                    "notes": "Gets all tags in the database linked tothe given sample by the sample primary key ID",
+                    "type": "Tag",
+                    "nickname": "findTagsBySample",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "sId",
+                            "description": "sId",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "limit",
+                            "description": "limit",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "offset",
+                            "description": "offset",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Resources«Tag»»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/tags/{id}",
+            "description": "findTagById",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Gets a tag by ID.",
+                    "notes": "Gets a tag record from the database by its primary key ID",
+                    "type": "Tag",
+                    "nickname": "findTagById",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "id",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "fields",
+                            "description": "fields",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "OK",
+                            "responseModel": "HttpEntity«RestEnvelope«Tag»»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/tags/{id}",
+            "description": "updateTag",
+            "operations": [
+                {
+                    "method": "PUT",
+                    "summary": "Updates an existing tag.",
+                    "notes": "Updates an existing tag record referenced by its primary key ID and returns it",
+                    "type": "Tag",
+                    "nickname": "updateTag",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "tag",
+                            "description": "tag",
+                            "defaultValue": "",
+                            "required": false,
+                            "type": "Tag",
+                            "paramType": "body",
+                            "allowMultiple": false
+                        },
+                        {
+                            "name": "id",
+                            "description": "id",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": null,
+                            "responseModel": "HttpEntity«Tag»"
+                        },
+                        {
+                            "code": 201,
+                            "message": "Created"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Not Found"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        },
+        {
+            "path": "/api/v1/tags/{id}",
+            "description": "deleteTag",
+            "operations": [
+                {
+                    "method": "DELETE",
+                    "summary": "Deletes a tag.",
+                    "notes": "Deletes a tag record from the database, given its primary key ID.",
+                    "type": "Tag",
+                    "nickname": "deleteTag",
+                    "produces": [
+                        "application/json",
+                        "application/xml",
+                        "text/plain",
+                        "text/csv"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "id",
+                            "defaultValue": "",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32",
+                            "paramType": "path",
+                            "allowMultiple": false
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": null,
+                            "responseModel": "HttpEntity«Tag»"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden"
+                        },
+                        {
+                            "code": 204,
+                            "message": "No Content"
+                        }
+                    ],
+                    "deprecated": "false"
+                }
+            ]
+        }
+    ],
+    "models": {
+        "CancerType": {
+            "id": "CancerType",
+            "description": "",
+            "extends": "",
+            "properties": {
+                "cancerTypeId": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "parentId": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "idPath": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "Link"
+                    }
+                }
+            }
+        },
+        "EntrezGene": {
+            "id": "EntrezGene",
+            "description": "",
+            "extends": "",
+            "properties": {
+                "entrezGeneId": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "chromosome": {
+                    "type": "string"
+                },
+                "taxId": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "locusTag": {
+                    "type": "string"
+                },
+                "primaryGeneSymbol": {
+                    "type": "string"
+                },
+                "chromosomeLocation": {
+                    "type": "string"
+                },
+                "geneType": {
+                    "type": "string"
+                },
+                "databaseCrossReferences": {
+                    "$ref": "object"
+                },
+                "geneSymbolAliases": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "Link"
+                    }
+                }
+            }
+        },
+        "Mutation": {
+            "id": "Mutation",
+            "description": "",
+            "extends": "",
+            "properties": {
+                "sampleId": {
+                    "type": "string"
+                },
+                "mutationId": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "entrezGeneId": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "geneSymbol": {
+                    "type": "string"
+                },
+                "referenceGenome": {
+                    "type": "string"
+                },
+                "chromosome": {
+                    "type": "string"
+                },
+                "dnaStartPosition": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "dnaEndPosition": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "strand": {
+                    "type": "string"
+                },
+                "variantClassification": {
+                    "type": "string"
+                },
+                "variantType": {
+                    "type": "string"
+                },
+                "referenceAllele": {
+                    "type": "string"
+                },
+                "variantAllele": {
+                    "type": "string"
+                },
+                "alternativeAlleleReads": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "referenceAlleleReads": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "dbSnpRsId": {
+                    "type": "string"
+                },
+                "dbSnpRsValStatus": {
+                    "type": "string"
+                },
+                "annotationTranscript": {
+                    "type": "string"
+                },
+                "transcriptStrand": {
+                    "type": "string"
+                },
+                "cDnaChange": {
+                    "type": "string"
+                },
+                "codonChange": {
+                    "type": "string"
+                },
+                "otherTranscript": {
+                    "type": "string"
+                },
+                "refseqMrnaId": {
+                    "type": "string"
+                },
+                "refseqProtId": {
+                    "type": "string"
+                },
+                "swissprotAccession": {
+                    "type": "string"
+                },
+                "swissprotEntry": {
+                    "type": "string"
+                },
+                "uniprotAaPosition": {
+                    "type": "string"
+                },
+                "uniprotRegion": {
+                    "type": "string"
+                },
+                "uniprotSite": {
+                    "type": "string"
+                },
+                "vertebrateAaAlignment": {
+                    "type": "string"
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "Link"
+                    }
+                }
+            }
+        },
+        "Sample": {
+            "id": "Sample",
+            "description": "",
+            "extends": "",
+            "properties": {
+                "cancerTypeId": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "sid": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "sampleId": {
+                    "type": "string"
+                },
+                "study": {
+                    "type": "string"
+                },
+                "source": {
+                    "type": "string"
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "Link"
+                    }
+                }
+            }
+        },
+        "Tag": {
+            "id": "Tag",
+            "description": "",
+            "extends": "",
+            "properties": {
+                "label": {
+                    "type": "string"
+                },
+                "tagId": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "Link"
+                    }
+                }
+            }
+        },
+        "Link": {
+            "id": "Link",
+            "description": "",
+            "extends": "",
+            "properties": {
+                "rel": {
+                    "type": "string"
+                },
+                "href": {
+                    "type": "string"
+                },
+                "templated": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "HttpEntity«EntrezGene»": {
+            "id": "HttpEntity«EntrezGene»",
+            "description": "",
+            "extends": "",
+            "properties": {
+                "body": {
+                    "$ref": "EntrezGene"
+                },
+                "headers": {
+                    "$ref": "HttpHeaders"
+                }
+            }
+        }
+    }
+}
+
