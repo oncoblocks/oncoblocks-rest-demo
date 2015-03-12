@@ -18,19 +18,13 @@ Running
 -------
 To run locally, no configuration is needed.  Navigating to the application's root URL will redirect to the Swagger API documentation main page, allowing for easy testing of the web services capabilities.
 
-Build the project with maven and deploy in Tomcat or another web app container:
+Build the project with Maven and then deploy the WAR file output in `/target` to Tomcat or another web app container:
 
 ```
 mvn -U clean install
 ```
 
-To run:
-
-```
-sh target/bin/webapp
-```
-
-Then go to:  http://localhost:8080/
+Navigate in your browser to the application's root URL to use the Swagger UI web service tools.
 
 To deploy to another machine, update the application URLs in the following files:
 
